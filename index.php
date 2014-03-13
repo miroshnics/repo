@@ -1,14 +1,16 @@
 <html>
 <head><title>Онлайн-Диспетчер автопарка</title></head>
-<body><? require 'init.php'; ?>
+<? require 'login.php'; ?>
+<body>
 
   <br />
 <? 
-
-    /*print "Connected successfully" . "</br>";
-    mysql_select_db("my_database") or die("К сожалению, не доступна база данных.</br>");
-*/
-    $ver = mysql_query("SELECT VERSION()"); 
+	  /* Соединяемся, выбираем базу данных */
+	$link = mysql_connect($dblocation, $dbuser, $dbpasswd)
+		or die("Невозможно подключиться к базе данных: " . mysql_error());
+		
+/* Текущая версия MySQL */
+	$ver = mysql_query("SELECT VERSION()"); 
   if(!$ver) 
   { 
     echo "<p>Ошибка в запросе</p>"; 
@@ -16,27 +18,38 @@
   } 
   echo "MySQL version is " . mysql_result($ver, 0);
 
-  $data = mysql_query("SELECT CURRENT_DATE;"); 
-  echo mysql_result($data, 0); 
+/* Текущая дата */
+  $date = mysql_query("SELECT CURRENT_DATE;"); 
+  echo mysql_result($date, 0);
+
+/* Показать все БД на данном сервере */
+	$DBs = mysql_query("SHOW DATABASES");
+	
+	$N = 0;
+	while ($row = mysql_fetch_assoc($DBs)) {
+		echo "<br />" . $row['Database'];
+		$N++;
+	}
+	echo "<br />Всего баз данных: " . $N . "<hr />";
+  
+/* Показать все таблицы в одной БД */
+$Tables = "SHOW TABLES FROM " . /*$dbname*/'mysql';
+$result = mysql_query($Tables);
+
+if (!$result) {
+    echo "Ошибка базы, не удалось получить список таблиц\n";
+    echo 'Ошибка MySQL: ' . mysql_error();
+} else {
+	$N = 0;
+	while ($row = mysql_fetch_row($result)) {
+		echo "Таблица: {$row[0]}<br />";
+		$N++;
+	}
+	echo "<br />Всего таблиц: " . $N . "<hr />";
+}
 ?>
 
-<?
 
-    /* Выполняем SQL-запрос */
-    $query = "SELECT * FROM my_table";
-    $result = mysql_query($query) or die("Неверный запрос: " . mysql_error() . "</br>");
-
-    /* Выводим результаты в html */
-    print "<table>\n";
-    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        print "\t<tr>\n";
-        foreach ($line as $col_value) {
-            print "\t\t<td>$col_value</td>\n";
-        }
-        print "\t</tr>\n";
-    }
-    print "</table>\n";
-?>
-
-<? require ('uninit.php'); ?></body>
+<? include ('uninit.php'); ?>
+</body>
 </html>
