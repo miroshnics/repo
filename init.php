@@ -1,25 +1,12 @@
-<?php 
-  $dblocation = "127.0.0.1"; 
+
+<?
+  $dblocation = "localhost"; 
   $dbname = "test"; 
   $dbuser = "root"; 
   $dbpasswd = "12345"; 
 
-  $dbcnx = @mysql_connect($dblocation, $dbuser, $dbpasswd); 
-  if (!$dbcnx) 
-  { 
-    echo "<p>К сожалению, не доступен сервер mySQL</p>"; 
-    exit(); 
-  } 
-  if (!@mysql_select_db($dbname,$dbcnx) ) 
-  { 
-    echo "<p>К сожалению, не доступна база данных</p>"; 
-    exit(); 
-  } 
-  $ver = mysql_query("SELECT VERSION()"); 
-  if(!$ver) 
-  { 
-    echo "<p>Ошибка в запросе</p>"; 
-    exit(); 
-  } 
-  echo mysql_result($ver, 0); 
-?> 
+      /* Соединяемся, выбираем базу данных */
+    $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
+        or die("Невозможно подключиться к базе данных: " . mysql_error());
+
+  ?>
