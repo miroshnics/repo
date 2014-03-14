@@ -2,7 +2,8 @@
 <head><title>Онлайн-Диспетчер автопарка</title></head>
 <? require 'login.php'; ?>
 <body>
-
+<a href="init.php"><input type="button" value="Создать БД!" /></a>
+<a href="uninit.php"><input type="button" value="Дропнуть БД!" /></a>
   <br />
 <? 
 	  /* Соединяемся, выбираем базу данных */
@@ -33,8 +34,7 @@
 	echo "<br />Всего баз данных: " . $N . "<hr />";
   
 /* Показать все таблицы в одной БД */
-$Tables = "SHOW TABLES FROM " . /*$dbname*/'mysql';
-$result = mysql_query($Tables);
+$result = mysql_query("SHOW TABLES FROM " . $dbname);
 
 if (!$result) {
     echo "Ошибка базы, не удалось получить список таблиц\n";
@@ -50,6 +50,7 @@ if (!$result) {
 ?>
 
 
-<? include ('uninit.php'); ?>
+<? /* Закрываем соединение */
+    mysql_close($link); ?>
 </body>
 </html>
