@@ -45,8 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') re
 $result = mysql_query("SHOW TABLES FROM " . $dbname);
 
 if (!$result) {
-    echo "Ошибка БД, не удалось получить список таблиц\n";
-    echo 'Ошибка MySQL: ' . mysql_error();
+    echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 } else {
 	$N = 0;
 	while ($row = mysql_fetch_row($result)) {
@@ -55,6 +54,21 @@ if (!$result) {
 	}
 	echo "<br />Всего таблиц: " . $N . "<hr />";
 }
+/* Показать все данные таблицы tbl_Drivers */
+$result = mysql_query("SELECT * FROM tbl_Drivers");
+if(!$result)
+    echo 'Не удалось получить данные таблицы tbl_Drivers: ' . mysql_error();
+else {
+	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
+	while ($row = mysql_fetch_row($result)) {
+		echo '<tr>';
+		foreach ($row as $value)
+			echo "<td>$value</td>";
+		echo '</tr>';
+	}
+	echo "</table>";
+}
+
 ?>
 
 <h2 align="center">Онлайн-Диспетчер: добавление водителя</h2>
