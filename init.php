@@ -58,8 +58,17 @@ if (!mysql_query('CREATE TABLE tbl_Clients (
 	echo 'Ошибка при создании таблицы tbl_Clients: ' . mysql_error() . "<br />";
 	else $status+=1*100;
 	
+/* Создаем таблицы tbl_DayHours */
+if (!mysql_query('CREATE TABLE tbl_DayHours (
+						id INT AUTO_INCREMENT NOT NULL,
+						Time_begin TIME NOT NULL,
+						Time_end TIME,
+						PRIMARY KEY(id));', $link))
+	echo 'Ошибка при создании таблицы tbl_DayHours: ' . mysql_error() . "<br />";
+	else $status+=1*1000;
+	
 /* Проверка успешности создания БД */
-if ($status==111) echo 'База данных успешно создана.<br />';
+if ($status==1111) echo 'База данных успешно создана.<br />';
 else echo 'Завершено с ошибками. код ошибки: ' . $status . '<br />';
 ?>
 <a href="index.php"><input type="button" value="На главную" /></a>

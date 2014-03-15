@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') re
   
 <?
 
-/* Показать все БД на данном сервере */
+/* Показать все БД на данном сервере 
 	$DBs = mysql_query("SHOW DATABASES");
 	
 	$N = 0;
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') re
 		echo "<br />" . $row['Database'];
 		$N++;
 	}
-	echo "<br />Всего баз данных: " . $N . "<hr />";
+	echo "<br />Всего баз данных: " . $N . "<hr />";*/
   
 /* Показать все таблицы в одной БД */
 $result = mysql_query("SHOW TABLES FROM " . $dbname);
@@ -48,17 +48,19 @@ if (!$result) {
     echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 } else {
 	$N = 0;
+	echo "<span style=\"color: 505050;\">Таблицы БД {$dbname}:</span><span> ";
 	while ($row = mysql_fetch_row($result)) {
-		echo "Таблица: {$row[0]}<br />";
+		echo "{$row[0]}, ";
 		$N++;
 	}
-	echo "<br />Всего таблиц: " . $N . "<hr />";
+	echo " </span><span style=\"color: 505050;\">(всего " . $N . ")</span><hr />";
 }
+
 /* Показать все данные таблицы tbl_Drivers */
 $result = mysql_query("SELECT * FROM tbl_Drivers");
 if(!$result)
     echo 'Не удалось получить данные таблицы tbl_Drivers: ' . mysql_error();
-else {
+elseif (is_null($result)){
 	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
 	while ($row = mysql_fetch_row($result)) {
 		echo '<tr>';
