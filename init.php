@@ -1,12 +1,11 @@
+<? require 'login.php'; ?>
+
 <html>
 <head><title>Онлайн-Диспетчер автопарка: Инициализация</title></head>
-<? require 'login.php'; ?>
 <body>
 <h2 align="center">Онлайн-Диспетчер автопарка: Инициализация</h2>
 
-<? 
-require 'login.php';
-
+<?
 $status=0;
 
  /* Соединяемся с сервером СУБД */
@@ -26,10 +25,10 @@ if (!mysql_select_db($dbname, $link)) {
 if (!mysql_query('CREATE TABLE tbl_Drivers (
 						id INT AUTO_INCREMENT NOT NULL,
 						name CHAR(30) NOT NULL,
-						sec_name CHAR(30) NOT NULL,
-						last_name CHAR(30) NOT NULL,
-						car CHAR(30) NOT NULL,
-						fuel CHAR (10),
+						sec_name VARCHAR(30) NOT NULL,
+						last_name VARCHAR(30) NOT NULL,
+						car VARCHAR(30) NOT NULL,
+						fuel VARCHAR (10),
 						PRIMARY KEY(id));', $link))
 	echo 'Ошибка при создании таблицы tbl_Drivers: ' . mysql_error() . "<br />";
 	else $status+=1;
