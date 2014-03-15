@@ -2,13 +2,15 @@
 <head><title>Онлайн-Диспетчер автопарка</title></head>
 <? require 'login.php'; ?>
 <body>
-<a href="init.php"><input type="button" value="Создать БД!" /></a>
-<a href="uninit.php"><input type="button" value="Дропнуть БД!" /></a>
+<h2 align="center">Онлайн-Диспетчер автопарка</h2>
+<a href="init.php"><input type="button" value="Создать базу данных" /></a>
+<a href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
+<a href="add_Driver.php"><input type="button" value="Добавить водителя" /></a>
   <br />
 <? 
-	  /* Соединяемся, выбираем базу данных */
+	  /* Соединяемся с сервером СУБД */
 	$link = mysql_connect($dblocation, $dbuser, $dbpasswd)
-		or die("Невозможно подключиться к базе данных: " . mysql_error());
+		or die("Невозможно подключиться к серверу СУБД: " . mysql_error());
 		
 /* Текущая версия MySQL */
 	$ver = mysql_query("SELECT VERSION()"); 
@@ -17,11 +19,11 @@
     echo "<p>Ошибка в запросе</p>"; 
     exit(); 
   } 
-  echo "MySQL version is " . mysql_result($ver, 0);
+  echo "MySQL version is " . mysql_result($ver, 0) . "<br />";
 
 /* Текущая дата */
   $date = mysql_query("SELECT CURRENT_DATE;"); 
-  echo mysql_result($date, 0);
+  echo "Now is " . mysql_result($date, 0);
 
 /* Показать все БД на данном сервере */
 	$DBs = mysql_query("SHOW DATABASES");
@@ -37,7 +39,7 @@
 $result = mysql_query("SHOW TABLES FROM " . $dbname);
 
 if (!$result) {
-    echo "Ошибка базы, не удалось получить список таблиц\n";
+    echo "Ошибка БД, не удалось получить список таблиц\n";
     echo 'Ошибка MySQL: ' . mysql_error();
 } else {
 	$N = 0;
@@ -48,6 +50,21 @@ if (!$result) {
 	echo "<br />Всего таблиц: " . $N . "<hr />";
 }
 ?>
+
+<h2 align="center">Онлайн-Диспетчер: добавление водителя</h2>
+<a href="index.php"><input type="button" value="На главную" /></a>
+<br />
+
+<form action="add_Driver.php method="post" >
+<table>
+<tr><td><span>Имя: </span></td><td><input type="textarea" width="30" name="name"></td></tr>
+<tr><td><span>Фамилия: </span></td><td><input type="textarea" width="30" name="sec_name"></td></tr>
+<tr><td><span>Отчество: </span></td><td><input type="textarea" width="30" name="last_name"></td></tr>
+<tr><td><span>Автомобиль: </span></td><td><input type="textarea" width="30" name="car"></td></tr>
+<tr><td><span>Вид горючего: </span></td><td><input type="textarea" width="30" name="car"></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" value="Добавить водителя"></td></tr>
+</table>
+</form>
 
 
 <? /* Закрываем соединение */
