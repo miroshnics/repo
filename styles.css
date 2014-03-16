@@ -1,0 +1,6 @@
+div.radio {display: inline;}
+div.radio:hover {background: #f0f0f0;}
+.spoiler1_head {background:#e7e7e7; border: 1px solid #4874a3; border-radius:5px; cursor:pointer;}
+.spoiler_content{display:none; background:#F7F7F7}
+div#main_table_div{position: relative; width: 50%; float: left;}
+div#r_sidebar{position: relative; width: 50%; float: right;}
