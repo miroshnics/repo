@@ -26,10 +26,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') re
 
 <div id="main_table_div">
 
-<table id="mtbl_header">
-</table>
 
-<table id="mtbl_days">
+	
+
+<table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
+	<tr><td>&nbsp;</td>
+	<td id="mtbl_td_header">
+		<table id="mtbl_header" frame="border" rules="all" cellpadding="2px" cellspacing="2px" ><tr>
+		<td>Driver_1</td>
+		<td>Driver_2</td>
+		<td>Driver_3</td>
+		</tr></table></td>
+	</tr>
+	<tr>
+		<td>15.03<br>вторник</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>16.03<br>среда</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>17.03<br>четверг</td>
+		<td>&nbsp;</td>
+	</tr>
 </table>
 
 </div>
