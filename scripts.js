@@ -1,3 +1,10 @@
+function selectRadio(e) {
+	t=e.previousSibling;
+	if((t.tagName=='INPUT')&&(t.type=='radio')) 
+		t.click();
+	return;
+}
+
 function toggle_open_close(id_spoiler) {
 	var obj = "";
 	if (document.getElementById)

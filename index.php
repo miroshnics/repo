@@ -18,20 +18,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') re
 <head>
 <title>Онлайн-Диспетчер автопарка</title>
 <link rel="stylesheet" href="styles.css">
-<script type="text/javascript" src="spoiler.js"></script>
-<script type="text/javascript">function selectRadio(e) {t=e.previousSibling;if((t.tagName=='INPUT')&&(t.type=='radio')) t.click();return;}</script>
+<script type="text/javascript" src="scripts.js"></script>
 </head>
 
 <body>
 <h2 align="center">Онлайн-Диспетчер автопарка</h2>
 
 <div id="main_table_div">
+
+<table id="mtbl_header">
+</table>
+
+<table id="mtbl_days">
+</table>
+
 </div>
 
 <div id="r_sidebar">
 <a href="init.php"><input type="button" value="Создать базу данных" /></a>
 <a href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
-<a href="add_Driver.php"><input type="button" value="Добавить водителя" /></a>
 <br />
   
 <?
