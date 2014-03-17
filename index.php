@@ -55,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') re
 </div>
 
 <div id="r_sidebar">
-<a href="init.php"><input type="button" value="Создать базу данных" /></a>
+<a href="create_db.php"><input type="button" value="Создать базу данных" /></a>
+<a href="init.php"><input type="button" value="Инициализировать базу данных" /></a>
 <a href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
 <br />
   
