@@ -1,20 +1,21 @@
 <?
+if(!$link) die("Íåâîçìîæíî ïîäêëþ÷èòüñÿ ê ñåðâåðó ÑÓÁÄ: " . mysql_error());
 
 switch ($_POST['fuel']) {
 case "80":
-    $fuel = "À-80";
+    $fuel = 'À-80';
     break;
 case "92":
-    $fuel = "ÀÈ-92";
+    $fuel = 'ÀÈ-92';
     break;
 case "95":
-    $fuel = "ÀÈ-95";
+    $fuel = 'ÀÈ-95';
     break;
 case "98":
-    $fuel = "ÀÈ-98";
+    $fuel = 'ÀÈ-98';
     break;
 case "DT":
-    $fuel = "ÄÒ";
+    $fuel = 'ÄÒ';
     break;
 }
 

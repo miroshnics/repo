@@ -1,7 +1,7 @@
-<div class="spoiler1_head" title="Нажмите, чтобы открыть форму" onClick="toggle_open_close('s1_c')"><h2 align="center">Онлайн-Диспетчер: добавление водителя</h2>
+<div class="spoiler1_head" title="Нажмите, чтобы открыть форму" onClick='toggle_open_close("s1_c")'>Онлайн-Диспетчер: добавление водителя
 </div>
 <div class="spoiler_content" id="s1_c">
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post" >
+	<form action="<?=$_SERVER['PHP_SELF'] /* index.php */?>" method="post" >
 	<input type="hidden" name="action" value="add_Driver" />
 	<table>
 	<tr><td><span>Имя:</span></td><td><input type="textarea" size="45" name="name" /></td></tr>

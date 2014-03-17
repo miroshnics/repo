@@ -11,7 +11,6 @@ if (!mysql_select_db($dbname, $link)) {
 
 /* Подключаем модули обработки форм, если есть POST-запрос */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'add_Driver') require 'add_Driver.php';
-
 ?>
 
 <html>
@@ -91,7 +90,7 @@ if (!$result) {
 $result = mysql_query("SELECT * FROM tbl_Drivers");
 if(!$result)
     echo 'Не удалось получить данные таблицы tbl_Drivers: ' . mysql_error();
-elseif (is_null($result)){
+elseif (!is_null($result)){
 	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
 	while ($row = mysql_fetch_row($result)) {
 		echo '<tr>';

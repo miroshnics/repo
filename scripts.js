@@ -5,19 +5,17 @@ function selectRadio(e) {
 	return;
 }
 
-function toggle_open_close(id_spoiler) {
+function toggle_open_close(id_spoiler_content) {
 	var obj = "";
 	if (document.getElementById)
-		obj = document.getElementById(id_spoiler).style;
+		obj = document.getElementById(id_spoiler_content).style;
 	else if (document.all)
-		obj = document.all[id_spoiler];
+		obj = document.all[id_spoiler_content];
 	else if (document.layers)
-		obj = document.layers[id_spoiler];
+		obj = document.layers[id_spoiler_content];
 	else return 1;
 
-	if (obj.display == "")
-		obj.display = "none";
-	else if (obj.display != "none")
+	if (obj.display != "none")
 		obj.display = "none";
 	else obj.display = "block";
 }
