@@ -1,9 +1,9 @@
 <? require 'login.php'; ?>
 
 <html>
-<head><title>Онлайн-Диспетчер автопарка: Инициализация</title></head>
+<head><title>Онлайн-Диспетчер автопарка: Создание БД</title></head>
 <body>
-<h2 align="center">Онлайн-Диспетчер автопарка: Инициализация</h2>
+<h2 align="center">Онлайн-Диспетчер автопарка: Создание БД</h2>
 
 <?
 $status=0;
@@ -42,21 +42,11 @@ if (!mysql_query('CREATE TABLE tbl_Trips (
 						time_end DATETIME,
 						dlina DECIMAL(9,3),
 						Driver_id INT NOT NULL,
-						client_id INT NOT NULL,
+						client CHAR(50) NOT NULL,
 						PRIMARY KEY(id),
-						FOREIGN KEY (Driver_id) REFERENCES tbl_Drivers(id),
-						FOREIGN KEY (client_id) REFERENCES tbl_Clients(id));', $link))
+						FOREIGN KEY (Driver_id) REFERENCES tbl_Drivers(id));', $link))
 	echo 'Ошибка при создании таблицы tbl_Trips: ' . mysql_error() . "<br />";
 	else $status+=1*10;
-
-/* Создаем таблицы tbl_Clients */
-if (!mysql_query('CREATE TABLE tbl_Clients (
-						id INT AUTO_INCREMENT NOT NULL,
-						name CHAR(30) NOT NULL,
-						dept CHAR(30) NOT NULL,
-						PRIMARY KEY(id));', $link))
-	echo 'Ошибка при создании таблицы tbl_Clients: ' . mysql_error() . "<br />";
-	else $status+=1*100;
 	
 /* Создаем таблицы tbl_DayHours */
 if (!mysql_query('CREATE TABLE tbl_DayHours (
@@ -65,11 +55,11 @@ if (!mysql_query('CREATE TABLE tbl_DayHours (
 						Time_end TIME NOT NULL,
 						PRIMARY KEY(id));', $link))
 	echo 'Ошибка при создании таблицы tbl_DayHours: ' . mysql_error() . "<br />";
-	else $status+=1*1000;
+	else $status+=1*100;
 	
 /* Проверка успешности создания БД */
-if ($status==1111) echo 'База данных успешно создана.<br />';
-else echo 'Завершено с ошибками. Код ошибки: ' . $status . '<br />';
+if ($status==111) echo 'База данных успешно создана.<br />';
+else echo 'Создание БД завершено с ошибками. Код ошибки: ' . $status . '<br />';
 ?>
 <a href="index.php"><input type="button" value="На главную" /></a>
 </body>
