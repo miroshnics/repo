@@ -5,18 +5,16 @@
 	<input type="hidden" name="action" value="add_Trip" />
 	<table>
 	<tr><td><span>Пункт назначения:</span></td><td><input type="textarea" size="45" name="end_point" /></td></tr>
-	<tr><td><span>Время отправления:</span></td><td><input type="textarea" size="45" name="sec_name" /></td></tr>
-	<tr><td><span>Водитель:</span></td><td><input type="textarea" size="45" name="last_name" /></td></tr>
-	<tr><td><span>:</span></td><td><input type="textarea" size="45" name="car" /></td></tr>
-	<tr><td><span>Вид горючего:</span></td>
-	<td>
-		<div class="radio"><input type="radio" name="fuel" value="80" /><span onClick="selectRadio(this)">А-80</span></div>
-		<div class="radio"><input type="radio" name="fuel" value="92" /><span onClick="selectRadio(this)">АИ-92</span></div>
-		<div class="radio"><input type="radio" name="fuel" value="95" /><span onClick="selectRadio(this)">АИ-95</span></div>
-		<div class="radio"><input type="radio" name="fuel" value="98" /><span onClick="selectRadio(this)">АИ-98</span></div>
-		<div class="radio"><input type="radio" name="fuel" value="DT" /><span onClick="selectRadio(this)">ДТ</span></div>
-	</td></tr>
-	<tr><td>&nbsp;</td><td><input type="submit" value="Добавить водителя"></td></tr>
+	<tr><td><span>Дата отправления:</span></td><td><input type="textarea" size="45" name="date_start" placeholder="в формате ДД-ММ" /></td></tr>
+	<tr><td><span>Время отправления:</span></td><td><input type="textarea" size="45" name="time_start" placeholder="в формате ЧЧ:ММ" /></td></tr>
+	<tr><td><span>Водитель:</span></td><td><select size="1" name="Driver_id">
+	<? mysql_data_seek($sql_drivers, 0);
+	while ($row = mysql_fetch_assoc($sql_drivers)) {
+		echo "<option>"
+		 . "{$row['name']} {$row['sec_name']} {$row['last_name']}"
+		 . "</option>";} ?>	
+	</select></td></tr>	
+	<tr><td>&nbsp;</td><td><input type="submit" value="Добавить поездку"></td></tr>
 	</table>
 	</form>
 </div>

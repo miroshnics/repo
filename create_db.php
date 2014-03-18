@@ -30,13 +30,13 @@ if (!mysql_query('CREATE TABLE tbl_Fuels (
 	echo 'Ошибка при создании таблицы tbl_Fuels: ' . mysql_error() . "<br />";
 	else $status += 1*1;
 	
-/* Создаем таблицы tbl_Deps */
-if (!mysql_query('CREATE TABLE tbl_Deps (
+/* Создаем таблицы tbl_Depts */
+if (!mysql_query('CREATE TABLE tbl_Depts (
 					id INT AUTO_INCREMENT NOT NULL,
 					name CHAR(30) NOT NULL,
 					color CHAR(6) NOT NULL,' . // HEX digit
 					'PRIMARY KEY(id));', $link))
-	echo 'Ошибка при создании таблицы tbl_Deps: ' . mysql_error() . "<br />";
+	echo 'Ошибка при создании таблицы tbl_Depts: ' . mysql_error() . "<br />";
 	else $status += 1*10;
 
 /* Создаем таблицы tbl_Drivers */
@@ -61,11 +61,11 @@ if (!mysql_query('CREATE TABLE tbl_Trips (
 					time_end DATETIME,
 					dlina DECIMAL(9,3),
 					Driver_id INT NOT NULL,
-					client_dep_id INT NOT NULL,
+					client_dept_id INT NOT NULL,
 					client CHAR(50) NOT NULL,
 					PRIMARY KEY(id),
 					FOREIGN KEY (Driver_id) REFERENCES tbl_Drivers(id),
-					FOREIGN KEY (client_dep_id) REFERENCES tbl_Deps(id));', $link))
+					FOREIGN KEY (client_dept_id) REFERENCES tbl_Depts(id));', $link))
 	echo 'Ошибка при создании таблицы tbl_Trips: ' . mysql_error() . "<br />";
 	else $status += 1*1000;
 	

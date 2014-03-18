@@ -47,15 +47,15 @@ $str = "SELECT
 	tbl_Drivers.sec_name as Driver_sec_name,
 	tbl_Drivers.last_name as Driver_last_name,
 	
-	tbl_Deps.name as Dep_name,
-	tbl_Deps.color as Dep_color
+	tbl_Depts.name as Dep_name,
+	tbl_Depts.color as Dep_color
 	
-	FROM tbl_Trips, tbl_Drivers, tbl_Deps
+	FROM tbl_Trips, tbl_Drivers, tbl_Depts
 	
 	WHERE 
 		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) = 0)
 		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
-		AND (tbl_Trips.client_dep_id = tbl_Deps.id);";
+		AND (tbl_Trips.client_dept_id = tbl_Depts.id);";
 
 $Day_trips = mysql_query($str);
 if (!$Day_trips) {
@@ -144,22 +144,48 @@ $str = "SELECT
 	FROM tbl_Drivers, tbl_Fuels
 	WHERE tbl_Drivers.fuel_id = tbl_Fuels.id
 	ORDER by Driver_id asc;";
-$result = mysql_query($str);
+$sql_drivers = mysql_query($str);
 if(!$result)
     echo 'Не удалось получить данные таблицы tbl_Drivers: ' . mysql_error();
-elseif (!is_null($result)){
-	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
-	while ($row = mysql_fetch_row($result)) {
-		echo '<tr>';
-		foreach ($row as $value)
-			echo "<td>$value</td>";
-		echo '</tr>';
+elseif (!is_null($sql_drivers)){
+	echo '<table id="drivers" frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
+	$N_sql_drivers = 0;
+	while ($row = mysql_fetch_assoc($sql_drivers)) {
+		$N_sql_drivers ++;
+		echo "<tr>"
+		 . "<td>{$row['Driver_id']}</td>"
+		 . "<td>{$row['name']}</td>"
+		 . "<td>{$row['sec_name']}</td>"
+		 . "<td>{$row['last_name']}</td>"
+		 . "<td>{$row['car']}</td>"
+		 . "<td>{$row['fuel_type_name']}</td>"
+		 . "<td>{$row['fuel_cost']}</td>"
+		 . "</tr>";
 	}
 	echo "</table>";
 }
 
+/* Показать все данные таблицы tbl_Depts */
+$str = "SELECT
+	tbl_Depts.name as name,
+	tbl_Depts.color as color
+	FROM tbl_Depts;";
+$sql_depts = mysql_query($str);
+if(!$result)
+    echo 'Не удалось получить данные таблицы tbl_Depts: ' . mysql_error();
+elseif (!is_null($sql_drivers)){
+	echo '<table id="depts" frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
+	$N_sql_depts = 0;
+	while ($row = mysql_fetch_assoc($sql_depts)) {
+		$N_sql_drivers ++;
+		echo "<tr>"
+		 . "<td style=\"background: #{$row['color']}\">{$row['name']}</td>"
+		 . "</tr>";
+	}
+	echo "</table>";
+}
 ?>
-
+<hr width="100%" />
 <? require 'add_Driver_Form.php' ?>
 <? require 'add_Trip_Form.php' ?>
 
