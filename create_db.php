@@ -21,35 +21,56 @@ if (!mysql_select_db($dbname, $link)) {
     die('Не удалось выбрать базу ' . $dbname . ': ' . mysql_error() . "<br />");
 }
 
+/* Создаем таблицы tbl_Fuels */
+if (!mysql_query('CREATE TABLE tbl_Fuels (
+					id INT AUTO_INCREMENT NOT NULL,
+					type_name CHAR(30) NOT NULL,
+					cost DECIMAL(9,2) NOT NULL,
+					PRIMARY KEY(id));', $link))
+	echo 'Ошибка при создании таблицы tbl_Fuels: ' . mysql_error() . "<br />";
+	else $status += 1*1;
+	
+/* Создаем таблицы tbl_Deps */
+if (!mysql_query('CREATE TABLE tbl_Deps (
+					id INT AUTO_INCREMENT NOT NULL,
+					name CHAR(30) NOT NULL,
+					color CHAR(6) NOT NULL,' . // HEX digit
+					'PRIMARY KEY(id));', $link))
+	echo 'Ошибка при создании таблицы tbl_Deps: ' . mysql_error() . "<br />";
+	else $status += 1*10;
+
 /* Создаем таблицы tbl_Drivers */
 if (!mysql_query('CREATE TABLE tbl_Drivers (
-						id INT AUTO_INCREMENT NOT NULL,
-						name CHAR(30) NOT NULL,
-						sec_name VARCHAR(30) NOT NULL,
-						last_name VARCHAR(30) NOT NULL,
-						car VARCHAR(30) NOT NULL,
-						fuel VARCHAR (10),
-						PRIMARY KEY(id));', $link))
+					id INT AUTO_INCREMENT NOT NULL,
+					name CHAR(30) NOT NULL,
+					sec_name VARCHAR(30) NOT NULL,
+					last_name VARCHAR(30) NOT NULL,
+					car VARCHAR(30) NOT NULL,
+					fuel_id INT NOT NULL,
+					PRIMARY KEY(id),
+					FOREIGN KEY (fuel_id) REFERENCES tbl_Fuels(id));', $link))
 	echo 'Ошибка при создании таблицы tbl_Drivers: ' . mysql_error() . "<br />";
-	else $status+=1;
+	else $status += 100;
 
 /* Создаем таблицы tbl_Trips */
 if (!mysql_query('CREATE TABLE tbl_Trips (
-						id INT AUTO_INCREMENT NOT NULL,
-						start_point CHAR(30) NOT NULL,
-						end_point CHAR(30) NOT NULL,
-						time_start DATETIME NOT NULL,
-						time_end DATETIME,
-						dlina DECIMAL(9,3),
-						Driver_id INT NOT NULL,
-						client CHAR(50) NOT NULL,
-						PRIMARY KEY(id),
-						FOREIGN KEY (Driver_id) REFERENCES tbl_Drivers(id));', $link))
+					id INT AUTO_INCREMENT NOT NULL,
+					start_point CHAR(30) NOT NULL,
+					end_point CHAR(30) NOT NULL,
+					time_start DATETIME NOT NULL,
+					time_end DATETIME,
+					dlina DECIMAL(9,3),
+					Driver_id INT NOT NULL,
+					client_dep_id INT NOT NULL,
+					client CHAR(50) NOT NULL,
+					PRIMARY KEY(id),
+					FOREIGN KEY (Driver_id) REFERENCES tbl_Drivers(id),
+					FOREIGN KEY (client_dep_id) REFERENCES tbl_Deps(id));', $link))
 	echo 'Ошибка при создании таблицы tbl_Trips: ' . mysql_error() . "<br />";
-	else $status+=1*10;
+	else $status += 1*1000;
 	
 /* Проверка успешности создания БД */
-if ($status==11) echo 'База данных успешно создана.<br />';
+if ($status == 1111) echo 'База данных успешно создана.<br />';
 else echo 'Создание БД завершено с ошибками. Код ошибки: ' . $status . '<br />';
 ?>
 <a href="index.php"><input type="button" value="На главную" /></a>

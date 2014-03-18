@@ -15,7 +15,7 @@ function toggle_open_close(id_spoiler_content) {
 		obj = document.layers[id_spoiler_content];
 	else return 1;
 
-	if (obj.display != "none")
-		obj.display = "none";
-	else obj.display = "block";
+	if (obj.display != "block")
+		obj.display = "block";
+	else obj.display = "none";
 }
