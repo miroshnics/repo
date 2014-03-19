@@ -45,82 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body>
 <h2 align="center">Онлайн-Диспетчер автопарка</h2>
 
-<div id="main_table_div">
-
-<? 
-$str = "SELECT
-	tbl_Trips.id as trip_id,
-	tbl_Trips.start_point as start_point,
-	tbl_Trips.end_point as end_point,
-	tbl_Trips.time_start as time_start,
-	tbl_Trips.time_end as time_end,
-	tbl_Trips.dlina as dlina,
-	tbl_Trips.client as client,
-	
-	tbl_Drivers.name as Driver_name,
-	tbl_Drivers.sec_name as Driver_sec_name,
-	tbl_Drivers.last_name as Driver_last_name,
-	
-	tbl_Depts.name as Dep_name,
-	tbl_Depts.color as Dep_color
-	
-	FROM tbl_Trips, tbl_Drivers, tbl_Depts
-	
-	WHERE 
-		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) = 0)
-		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
-		AND (tbl_Trips.client_dept_id = tbl_Depts.id);";
-
-$Day_trips = mysql_query($str);
-if (!$Day_trips) {
-    echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
-} elseif (!is_null($Day_trips)){
-	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
-	while ($row = mysql_fetch_row($Day_trips)) {
-		echo '<tr>';
-		foreach ($row as $value)
-			echo "<td>$value</td>";
-		echo '</tr>';
-	}
-	echo "</table>";
-}
-
-
-?>
-
-<table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
-	<tr><td>&nbsp;</td>
-	<td id="mtbl_td_header">
-		<table id="mtbl_header" frame="border" rules="all" cellpadding="2px" cellspacing="2px" ><tr>
-		<td><?echo mysql_result($sql_drivers,0,1)
-				 . mysql_result($sql_drivers,0,2)
-				 . mysql_result($sql_drivers,0,3);
-		?></td>
-		<td><? echo mysql_result($sql_drivers,1,1)
-				 . mysql_result($sql_drivers,1,2)
-				 . mysql_result($sql_drivers,1,3);
-		?></td>
-		<td><? echo mysql_result($sql_drivers,2,1)
-				 . mysql_result($sql_drivers,2,2)
-				 . mysql_result($sql_drivers,2,3);
-		?></td>
-		</tr></table></td>
-	</tr>
-	<tr>
-		<td>15.03<br>вторник</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>16.03<br>среда</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>17.03<br>четверг</td>
-		<td>&nbsp;</td>
-	</tr>
-</table>
-
-</div>
 
 <div id="r_sidebar">
 <a href="create_db.php"><input type="button" value="Создать базу данных" /></a>
@@ -202,6 +126,84 @@ elseif (!is_null($sql_drivers)){
 <? require 'add_Trip_Form.php' ?>
 
 </div>
+
+<div id="main_table_div">
+
+<? 
+$str = "SELECT
+	tbl_Trips.id as trip_id,
+	tbl_Trips.start_point as start_point,
+	tbl_Trips.end_point as end_point,
+	tbl_Trips.time_start as time_start,
+	tbl_Trips.time_end as time_end,
+	tbl_Trips.dlina as dlina,
+	tbl_Trips.client as client,
+	
+	tbl_Drivers.name as Driver_name,
+	tbl_Drivers.sec_name as Driver_sec_name,
+	tbl_Drivers.last_name as Driver_last_name,
+	
+	tbl_Depts.name as Dep_name,
+	tbl_Depts.color as Dep_color
+	
+	FROM tbl_Trips, tbl_Drivers, tbl_Depts
+	
+	WHERE 
+		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) = 0)
+		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
+		AND (tbl_Trips.client_dept_id = tbl_Depts.id);";
+
+$Day_trips = mysql_query($str);
+if (!$Day_trips) {
+    echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
+} elseif (!is_null($Day_trips)){
+	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
+	while ($row = mysql_fetch_row($Day_trips)) {
+		echo '<tr>';
+		foreach ($row as $value)
+			echo "<td>$value</td>";
+		echo '</tr>';
+	}
+	echo "</table>";
+}
+
+
+?>
+
+<table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
+	<tr><td>&nbsp;</td>
+	<td id="mtbl_td_header">
+		<table id="mtbl_header" frame="border" rules="all" cellpadding="2px" cellspacing="2px" ><tr>
+		<td><?echo mysql_result($sql_drivers,0,1)
+				 . mysql_result($sql_drivers,0,2)
+				 . mysql_result($sql_drivers,0,3);
+		?></td>
+		<td><? echo mysql_result($sql_drivers,1,1)
+				 . mysql_result($sql_drivers,1,2)
+				 . mysql_result($sql_drivers,1,3);
+		?></td>
+		<td><? echo mysql_result($sql_drivers,2,1)
+				 . mysql_result($sql_drivers,2,2)
+				 . mysql_result($sql_drivers,2,3);
+		?></td>
+		</tr></table></td>
+	</tr>
+	<tr>
+		<td>15.03<br>вторник</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>16.03<br>среда</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>17.03<br>четверг</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+
+</div>
+
 
 <? /* Закрываем соединение */
     mysql_close($link); ?>
