@@ -9,6 +9,20 @@ if (!mysql_select_db($dbname, $link)) {
     echo('Не удалось выбрать базу ' . $dbname . ': ' . mysql_error() . "<br />");
 }
 
+/* Заправшиваем глобавльные данные о водителях */
+$str = "SELECT 
+	tbl_Drivers.id as Driver_id, 
+	tbl_Drivers.name as name, 
+	tbl_Drivers.sec_name as sec_name,
+	tbl_Drivers.last_name as last_name,
+	tbl_Drivers.car as car,
+	tbl_Fuels.type_name as fuel_type_name,
+	tbl_Fuels.cost as fuel_cost
+	FROM tbl_Drivers, tbl_Fuels
+	WHERE tbl_Drivers.fuel_id = tbl_Fuels.id
+	ORDER by Driver_id asc;";
+$sql_drivers = mysql_query($str);
+
 /* Подключаем модули обработки форм, если есть POST-запрос */
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	switch ($_POST['action']) {
@@ -78,9 +92,18 @@ if (!$Day_trips) {
 	<tr><td>&nbsp;</td>
 	<td id="mtbl_td_header">
 		<table id="mtbl_header" frame="border" rules="all" cellpadding="2px" cellspacing="2px" ><tr>
-		<td>Driver_1</td>
-		<td>Driver_2</td>
-		<td>Driver_3</td>
+		<td><?echo mysql_result($sql_drivers,0,1)
+				 . mysql_result($sql_drivers,0,2)
+				 . mysql_result($sql_drivers,0,3);
+		?></td>
+		<td><? echo mysql_result($sql_drivers,1,1)
+				 . mysql_result($sql_drivers,1,2)
+				 . mysql_result($sql_drivers,1,3);
+		?></td>
+		<td><? echo mysql_result($sql_drivers,2,1)
+				 . mysql_result($sql_drivers,2,2)
+				 . mysql_result($sql_drivers,2,3);
+		?></td>
 		</tr></table></td>
 	</tr>
 	<tr>
@@ -133,19 +156,8 @@ if (!$result) {
 }
 
 /* Показать все данные таблицы tbl_Drivers */
-$str = "SELECT 
-	tbl_Drivers.id as Driver_id, 
-	tbl_Drivers.name as name, 
-	tbl_Drivers.sec_name as sec_name,
-	tbl_Drivers.last_name as last_name,
-	tbl_Drivers.car as car,
-	tbl_Fuels.type_name as fuel_type_name,
-	tbl_Fuels.cost as fuel_cost
-	FROM tbl_Drivers, tbl_Fuels
-	WHERE tbl_Drivers.fuel_id = tbl_Fuels.id
-	ORDER by Driver_id asc;";
-$sql_drivers = mysql_query($str);
-if(!$result)
+mysql_data_seek($sql_drivers, 0);
+if(!$sql_drivers)
     echo 'Не удалось получить данные таблицы tbl_Drivers: ' . mysql_error();
 elseif (!is_null($sql_drivers)){
 	echo '<table id="drivers" frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
@@ -154,9 +166,9 @@ elseif (!is_null($sql_drivers)){
 		$N_sql_drivers ++;
 		echo "<tr>"
 		 . "<td>{$row['Driver_id']}</td>"
-		 . "<td>{$row['name']}</td>"
-		 . "<td>{$row['sec_name']}</td>"
-		 . "<td>{$row['last_name']}</td>"
+		 . "<td>{$row['name']} "
+		 . "{$row['sec_name']} "
+		 . "{$row['last_name']}</td>"
 		 . "<td>{$row['car']}</td>"
 		 . "<td>{$row['fuel_type_name']}</td>"
 		 . "<td>{$row['fuel_cost']}</td>"
@@ -186,7 +198,7 @@ elseif (!is_null($sql_drivers)){
 }
 ?>
 <hr width="100%" />
-<? require 'add_Driver_Form.php' ?>
+<? require 'add_Driver_Form.php' ?><br>
 <? require 'add_Trip_Form.php' ?>
 
 </div>
