@@ -8,8 +8,8 @@ div.radio {display: inline;}
 div.radio:hover {background: #f0f0f0;}
 .spoiler1_head {background: #e7e7e7; border: 1px solid #4874a3; border-radius: 5px; cursor: pointer;}
 div.spoiler_content{display: none; background: #F7F7F7; text-align: center;}
-div#r_sidebar{position: relative; outline: 3px dotted green;}
-div#main_table_div{position: relative; outline: 3px dotted red;}
+div#r_sidebar{position: relative;}
+div#main_table_div{position: relative;}
 
 td#mtbl_td_header{padding-left: 30px;}
 table#mtbl_header {position: relative; width: 100%; text-align: center;}
