@@ -55,7 +55,7 @@ if (!mysql_query('CREATE TABLE tbl_Drivers (
 /* Создаем таблицы tbl_Trips */
 if (!mysql_query('CREATE TABLE tbl_Trips (
 					id INT AUTO_INCREMENT NOT NULL,
-					start_point CHAR(30) NOT NULL,
+					start_point CHAR(30),
 					end_point CHAR(30) NOT NULL,
 					time_start DATETIME NOT NULL,
 					time_end DATETIME,

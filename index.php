@@ -54,18 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   
 <?
 
-/* Показать все БД на данном сервере 
-	$DBs = mysql_query("SHOW DATABASES");
-	
-	$N = 0;
-	while ($row = mysql_fetch_assoc($DBs)) {
-		echo "<br />" . $row['Database'];
-		$N++;
-	}
-	echo "<br />Всего баз данных: " . $N . "<hr />";*/
- 
-
-/* Показать все таблицы в одной БД */
+/* Показать список всех таблиц в одной БД */
 $result = mysql_query("SHOW TABLES FROM " . $dbname);
 if (!$result) {
     echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
@@ -101,7 +90,7 @@ elseif (!is_null($sql_drivers)){
 	echo "</table>";
 }
 
-/* Показать все данные таблицы tbl_Depts */
+/* Показать все данные в таблице tbl_Depts */
 $str = "SELECT
 	tbl_Depts.name as name,
 	tbl_Depts.color as color
@@ -130,6 +119,7 @@ elseif (!is_null($sql_drivers)){
 <div id="main_table_div">
 
 <? 
+echo 'Loading Trips...';
 $str = "SELECT
 	tbl_Trips.id as trip_id,
 	tbl_Trips.start_point as start_point,
@@ -165,6 +155,7 @@ if (!$Day_trips) {
 		echo '</tr>';
 	}
 	echo "</table>";
+	echo ' Trips loaded.';
 }
 
 
