@@ -19,13 +19,13 @@ div.spoiler_content{display: none; background: #F7F7F7; text-align: center;}
 div#r_sidebar{position: relative;}
 div#main_table_div{position: relative;}
 
+table#mtbl_days {position: relative; width: 100%; margin: auto;}
+table#mtbl_days td.date {text-align: center; font-size: 16px; background: #eeeeee;}
+table#mtbl_days td.date span.date {font-size: 26px;}
+
 td#mtbl_td_header{padding-left: 30px;}
 table#mtbl_header {position: relative; width: 100%; text-align: center;}
-table#mtbl_days {position: relative; width: 100%; margin: auto;}
 
 table#drivers {position: relative; float: left; margin: 5px;}
 
 td.delim {border-bottom: 1px solid grey;}
-
-table#mtbl_days td.date {text-align: center; font-size: 16px; background: #eeeeee;}
-table#mtbl_days td.date span.date {font-size: 26px;}
