@@ -67,7 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <head>
 <title>Онлайн-Диспетчер автопарка</title>
 <link rel="stylesheet" href="styles.css">
-<script type="text/javascript" src="scripts.js"></script>
+<script type="text/javascript" src="js/scripts.js"></script>
+<script type="text/javascript" src="js/calendar_ru.js"></script>
 </head>
 
 <body>

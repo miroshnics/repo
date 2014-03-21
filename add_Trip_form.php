@@ -17,8 +17,8 @@
 	</select></td></tr>
 	<tr><td><span>Заказчик:</span></td><td><input type="textarea" size="45" name="client" /></td></tr>
 	<tr><td><span>Отдел:</span></td><td><input type="textarea" size="45" name="client_dept_id" /></td></tr>
-	<tr><td><span>Время прибытия:</span></td><td><input type="textarea" size="45" name="client_dept_id" /></td></tr>
-	<tr><td><span>Длина маршрута:</span></td><td><input type="textarea" size="45" name="client_dept_id" /></td></tr>
+	<tr><td><span>Время прибытия:</span></td><td><input type="textarea" size="45" name="time_end" /></td></tr>
+	<tr><td><span>Длина маршрута:</span></td><td><input type="textarea" size="45" name="dlina" /></td></tr>
 	<tr><td>&nbsp;</td><td><input type="submit" value="Добавить поездку"></td></tr>
 	</table>
 	</form>
