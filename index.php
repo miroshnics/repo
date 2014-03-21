@@ -1,4 +1,6 @@
 <?
+setlocale(LC_ALL, 'ru_RU');
+date_default_timezone_set("Europe/Moscow");
 require 'login.php';
 /* Соединяемся с сервером СУБД */
 $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
@@ -165,6 +167,10 @@ if (!is_null($sql_day_trips)){
 <!-- **************************** LEFT MAINTABLE **************************** -->
 <div id="main_table_div">
 
+<?
+$tomorrow  = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));$lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));$nextyear  = mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1);
+?>
+<br>
 <table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
 	<tr><td>&nbsp;</td>
 	<td id="mtbl_td_header">
@@ -184,11 +190,27 @@ if (!is_null($sql_day_trips)){
 		</tr></table></td>
 	</tr>
 	<tr>
-		<td>15.03<br>вторник</td>
+		<td>15.03<br>Понедельник</td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>16.03<br>среда</td>
+		<td>16.03<br>Вторник</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>17.03<br>четверг</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>17.03<br>четверг</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>17.03<br>четверг</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>17.03<br>четверг</td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
