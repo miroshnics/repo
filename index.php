@@ -44,7 +44,7 @@ $str = "SELECT
 	FROM tbl_Trips, tbl_Drivers, tbl_Depts
 	
 	WHERE 
-		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) < 10)
+		(ABS(TO_DAYS(tbl_Trips.time_start) - TO_DAYS(NOW())) < 4)
 		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
 		AND (tbl_Trips.client_dept_id = tbl_Depts.id)
 	ORDER BY tbl_Trips.time_start;";
