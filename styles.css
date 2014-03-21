@@ -1,6 +1,6 @@
 /* если ширина окна >= 820px */
-@media screen and (min-width: 820px) {
-div#r_sidebar{min-width: 176px; width: 49%; max-width: 49%; float: right;}
+@media screen and (min-width: 836px) {
+div#r_sidebar{position: relative; min-width: 176px; width: 49%; max-width: 49%; float: right;}
 div.main_table_div{min-width: 380px; width: 49%; max-width: 49%; float: left;}
 }
 
@@ -10,28 +10,35 @@ html {min-width: 580px;}
 body {min-width: 570px;}
 }
 
-.debug {font-size: 10px; outline: 3px dotted red;}
+/* если ширина окна < 580px */
+@media screen and (max-width: 580px) {
+table#depts {display: none;}
+}
+
+table#depts {position: absolute; float: right; right: 15px; top: 15px; }
+
+.debug {font-size: 10px; outline: 3px dotted red; display: none;}
 
 div.radio {display: inline;}
 div.radio:hover {background: #f0f0f0;}
 .spoiler1_head {background: #e7e7e7; border: 1px solid #4874a3; border-radius: 5px; cursor: pointer;}
 div.spoiler_content{display: none; background: #F7F7F7; text-align: center;}
-div#r_sidebar{position: relative;}
 div.main_table_div{position: relative;}
 
-table#mtbl_days {position: relative; width: 100%; margin: auto;}
-table#mtbl_days td.date {text-align: center; font-size: 16px; background: #eeeeee;}
-table#mtbl_days td.date#today {background: #fafafa;}
-table#mtbl_days td.date span.date {font-size: 26px;}
+table.mtbl_days {position: relative; width: 100%; margin: auto;}
+table.mtbl_days td.date {width: 100px; text-align: center; font-size: 16px; background: #eeeeee;}
+table.mtbl_days td.date#today {background-color: #fafafa;}
+table.mtbl_days td.date#today+td {background: #ddffdd;}
+table.mtbl_days td.date span.date {font-size: 26px;}
 
-table#mtbl_days td.day_cal table.daycal {font-size: 8px; text-align: center; width: 100%;}
-table#mtbl_days td.day_cal table.daycal td.hour {width: 42px; }
+/*td.holiday {background: url('img/bg_holyday.png') !important;}*/
+
+table.mtbl_days td.day_cal table.daycal {font-size: 10px; text-align: center; width: 100%;}
+table.mtbl_days td.day_cal table.daycal td.hour {width: 42px; }
 
 
-td#mtbl_td_header{padding-left: 51px;}
-td#mtbl_td_header table#mtbl_header {position: relative; width: 100%; text-align: center; font-size: 16px;}
-td#mtbl_td_header table#mtbl_header td {width: 30%; padding: 0;}
-
-table#drivers {position: relative; float: left; margin: 5px;}
+td.mtbl_td_header{padding-left: 51px;}
+td.mtbl_td_header table.mtbl_header {position: relative; width: 100%; text-align: center; font-size: 16px;}
+td.mtbl_td_header table.mtbl_header td {width: 30%; padding: 0;}
 
 td.delim {border-bottom: 1px solid grey;}
