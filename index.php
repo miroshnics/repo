@@ -1,7 +1,19 @@
 <?
-setlocale(LC_ALL, 'ru_RU');
+/* Вывод заголовка с данными о кодировке страницы */
+header('Content-Type: text/html; charset=windows-1251');
+
+/* Настройка локали */
+setlocale(LC_ALL, 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251', 'russian');
 date_default_timezone_set("Europe/Moscow");
+
+for ($i=0; $i<7; $i++) {
+	$WeekDay[$i]['nixtime'] = mktime(0, 0, 0, date("m"), date("d")+($i-1), date("Y"));
+	$WeekDay[$i]['day'] = ucfirst(strftime("%A", $WeekDay[$i]['nixtime']));
+	$WeekDay[$i]['date'] = date("d.m", $WeekDay[$i]['nixtime']);
+}
+
 require 'login.php';
+
 /* Соединяемся с сервером СУБД */
 $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
 	or die("Невозможно подключиться к серверу СУБД: " . mysql_error());
@@ -10,6 +22,9 @@ $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
 if (!mysql_select_db($dbname, $link)) {
     echo('Не удалось выбрать базу ' . $dbname . ': ' . mysql_error() . "<br />");
 }
+
+/* Настройка подключения к базе данных */
+mysql_query('SET names "cp1251"');
 
 /* Загружаем глобальные данные о водителях */
 $str = "SELECT 
@@ -167,9 +182,7 @@ if (!is_null($sql_day_trips)){
 <!-- **************************** LEFT MAINTABLE **************************** -->
 <div id="main_table_div">
 
-<?
-$tomorrow  = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));$lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));$nextyear  = mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1);
-?>
+<? for ($i=0; $i<7; $i++) $day[$i] = ucfirst(strftime("%A", mktime(0, 0, 0, date("m"), date("d")+($i-3), date("Y")))); ?>
 <br>
 <table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
 	<tr><td>&nbsp;</td>
@@ -190,31 +203,38 @@ $tomorrow  = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));$lastmonth = m
 		</tr></table></td>
 	</tr>
 	<tr>
-		<td>15.03<br>Понедельник</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[0]['date'] . "</span><br>" . $WeekDay[0]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>16.03<br>Вторник</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[1]['date'] . "</span><br>" . $WeekDay[1]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>17.03<br>четверг</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[2]['date'] . "</span><br>" . $WeekDay[2]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>17.03<br>четверг</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[3]['date'] . "</span><br>" . $WeekDay[3]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>17.03<br>четверг</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[4]['date'] . "</span><br>" . $WeekDay[4]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>17.03<br>четверг</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[5]['date'] . "</span><br>" . $WeekDay[5]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td>17.03<br>четверг</td>
+		<td class="date">
+		<? echo "<span class=\"date\">" . $WeekDay[6]['date'] . "</span><br>" . $WeekDay[6]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 </table>

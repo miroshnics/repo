@@ -27,3 +27,5 @@ table#drivers {position: relative; float: left; margin: 5px;}
 
 td.delim {border-bottom: 1px solid grey;}
 
+table#mtbl_days td.date {text-align: center; font-size: 16px; background: #eeeeee;}
+table#mtbl_days td.date span.date {font-size: 26px;}
