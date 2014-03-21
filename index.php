@@ -9,7 +9,7 @@ if (!mysql_select_db($dbname, $link)) {
     echo('Не удалось выбрать базу ' . $dbname . ': ' . mysql_error() . "<br />");
 }
 
-/* Заправшиваем глобавльные данные о водителях */
+/* Загружаем глобальные данные о водителях */
 $str = "SELECT 
 	tbl_Drivers.id as Driver_id, 
 	tbl_Drivers.name as name, 
@@ -22,6 +22,34 @@ $str = "SELECT
 	WHERE tbl_Drivers.fuel_id = tbl_Fuels.id
 	ORDER by Driver_id asc;";
 $sql_drivers = mysql_query($str);
+if (!$sql_drivers) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
+
+/* Загружаем глобальные данные о ближайших поездках */
+$str = "SELECT
+	tbl_Trips.id as trip_id,
+	tbl_Trips.start_point as start_point,
+	tbl_Trips.end_point as end_point,
+	tbl_Trips.time_start as time_start,
+	tbl_Trips.time_end as time_end,
+	tbl_Trips.dlina as dlina,
+	
+	tbl_Drivers.name as Driver_name,
+	tbl_Drivers.sec_name as Driver_sec_name,
+	tbl_Drivers.last_name as Driver_last_name,
+	
+	tbl_Trips.client as client,
+	tbl_Depts.name as Dept_name,
+	tbl_Depts.color as Dept_color
+	
+	FROM tbl_Trips, tbl_Drivers, tbl_Depts
+	
+	WHERE 
+		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) < 10)
+		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
+		AND (tbl_Trips.client_dept_id = tbl_Depts.id)
+	ORDER BY tbl_Trips.time_start;";
+$sql_day_trips = mysql_query($str);
+if (!$sql_day_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 
 /* Подключаем модули обработки форм, если есть POST-запрос */
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -45,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body>
 <h2 align="center">Онлайн-Диспетчер автопарка</h2>
 
-
+<!-- **************************** RIGHT SIDEBAR **************************** -->
 <div id="r_sidebar">
 <a href="create_db.php"><input type="button" value="Создать базу данных" /></a>
 <a href="init.php"><input type="button" value="Инициализировать базу данных" /></a>
@@ -55,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <?
 
 /* Показать список всех таблиц в одной БД */
+echo "<div class=\"debug\">";
 $result = mysql_query("SHOW TABLES FROM " . $dbname);
 if (!$result) {
     echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
@@ -67,6 +96,7 @@ if (!$result) {
 	}
 	echo " </span><span style=\"color: 505050;\">(всего " . $N . ")</span><hr />";
 }
+echo "</div>";
 
 /* Показать все данные таблицы tbl_Drivers */
 mysql_data_seek($sql_drivers, 0);
@@ -109,57 +139,30 @@ elseif (!is_null($sql_drivers)){
 	}
 	echo "</table>";
 }
+
+/* Показать ближайшие поездки из предварительно загруженной переменной $sql_day_trips */
+if (!is_null($sql_day_trips)){
+	echo '<table class="debug" id="trips" frame="border" rules="all" cellpadding="2px" cellspacing="0" >';
+	while ($row = mysql_fetch_assoc($sql_day_trips)) {
+		echo '<tr>';
+		foreach ($row as $value)
+			echo "<td style=\"background: #{$row['Dept_color']}\">$value</td>";
+		echo '</tr>';
+	}
+	echo "</table>";
+}
 ?>
 <hr width="100%" />
 <? require 'add_Driver_Form.php' ?><br>
 <? require 'add_Trip_Form.php' ?>
 
 </div>
+<!--  RIGHT SIDEBAR  -->
 
+
+
+<!-- **************************** LEFT MAINTABLE **************************** -->
 <div id="main_table_div">
-
-<? 
-echo 'Loading Trips...';
-$str = "SELECT
-	tbl_Trips.id as trip_id,
-	tbl_Trips.start_point as start_point,
-	tbl_Trips.end_point as end_point,
-	tbl_Trips.time_start as time_start,
-	tbl_Trips.time_end as time_end,
-	tbl_Trips.dlina as dlina,
-	tbl_Trips.client as client,
-	
-	tbl_Drivers.name as Driver_name,
-	tbl_Drivers.sec_name as Driver_sec_name,
-	tbl_Drivers.last_name as Driver_last_name,
-	
-	tbl_Depts.name as Dep_name,
-	tbl_Depts.color as Dep_color
-	
-	FROM tbl_Trips, tbl_Drivers, tbl_Depts
-	
-	WHERE 
-		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) = 0)
-		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
-		AND (tbl_Trips.client_dept_id = tbl_Depts.id);";
-
-$Day_trips = mysql_query($str);
-if (!$Day_trips) {
-    echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
-} elseif (!is_null($Day_trips)){
-	echo '<table frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
-	while ($row = mysql_fetch_row($Day_trips)) {
-		echo '<tr>';
-		foreach ($row as $value)
-			echo "<td>$value</td>";
-		echo '</tr>';
-	}
-	echo "</table>";
-	echo ' Trips loaded.';
-}
-
-
-?>
 
 <table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
 	<tr><td>&nbsp;</td>
@@ -194,7 +197,7 @@ if (!$Day_trips) {
 </table>
 
 </div>
-
+<!-- LEFT MAINTABLE -->
 
 <? /* Закрываем соединение */
     mysql_close($link); ?>

@@ -1,8 +1,16 @@
-/* если ширина окна >= 580px */
+/* если ширина окна >= 764px */
 @media screen and (min-width: 764px) {
 div#r_sidebar{min-width: 176px; width: 49%; max-width: 49%; float: right;}
 div#main_table_div{min-width: 380px; width: 49%; max-width: 49%; float: left;}
 }
+
+/* если ширина окна < 764px */
+@media screen and (max-width: 763px) {
+html {min-width: 580px;}
+body {min-width: 570px;}
+}
+
+.debug {font-size: 10px; outline: 3px dotted red;}
 
 div.radio {display: inline;}
 div.radio:hover {background: #f0f0f0;}
