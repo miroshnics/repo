@@ -1,6 +1,4 @@
 <?
-/* Вывод заголовка с данными о кодировке страницы */
-header('Content-Type: text/html; charset=windows-1251');
 
 /* Настройка локали */
 setlocale(LC_ALL, 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251', 'russian');
@@ -107,12 +105,12 @@ if (!$result) {
     echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 } else {
 	$N = 0;
-	echo "<span style=\"color: 505050;\">Таблицы БД {$dbname}:</span><span> ";
+	echo "<span style=\"color: 505050;\">Таблицы БД {$dbname}:</span>\n<span> ";
 	while ($row = mysql_fetch_row($result)) {
 		echo "{$row[0]}, ";
 		$N++;
 	}
-	echo " </span><span style=\"color: 505050;\">(всего " . $N . ")</span><hr />";
+	echo " </span>\n<span style=\"color: 505050;\">(всего " . $N . ")</span>\n<hr />";
 }
 echo "</div>";
 
@@ -125,17 +123,17 @@ elseif (!is_null($sql_drivers)){
 	$N_sql_drivers = 0;
 	while ($row = mysql_fetch_assoc($sql_drivers)) {
 		$N_sql_drivers ++;
-		echo "<tr>"
-		 . "<td>{$row['Driver_id']}</td>"
-		 . "<td>{$row['name']} "
+		echo "\n<tr>"
+		 . "\n<td>{$row['Driver_id']}</td>"
+		 . "\n<td>{$row['name']} "
 		 . "{$row['sec_name']} "
 		 . "{$row['last_name']}</td>"
-		 . "<td>{$row['car']}</td>"
-		 . "<td>{$row['fuel_type_name']}</td>"
-		 . "<td>{$row['fuel_cost']}</td>"
-		 . "</tr>";
+		 . "\n<td>{$row['car']}</td>"
+		 . "\n<td>{$row['fuel_type_name']}</td>"
+		 . "\n<td>{$row['fuel_cost']}</td>"
+		 . "\n</tr>";
 	}
-	echo "</table>";
+	echo "\n</table>";
 }
 
 /* Показать все данные в таблице tbl_Depts */
@@ -147,27 +145,27 @@ $sql_depts = mysql_query($str);
 if(!$result)
     echo 'Не удалось получить данные таблицы tbl_Depts: ' . mysql_error();
 elseif (!is_null($sql_drivers)){
-	echo '<table id="depts" frame="border" rules="all" cellpadding="3px" cellspacing="0" >';
+	echo "\n<table id=\"depts\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
 	$N_sql_depts = 0;
 	while ($row = mysql_fetch_assoc($sql_depts)) {
 		$N_sql_drivers ++;
-		echo "<tr>"
-		 . "<td style=\"background: #{$row['color']}\">{$row['name']}</td>"
-		 . "</tr>";
+		echo "\n<tr>"
+		 . "\n<td style=\"background: #{$row['color']}\">{$row['name']}</td>"
+		 . "\n</tr>";
 	}
-	echo "</table>";
+	echo "\n</table>";
 }
 
 /* Показать ближайшие поездки из предварительно загруженной переменной $sql_day_trips */
 if (!is_null($sql_day_trips)){
-	echo '<table class="debug" id="trips" frame="border" rules="all" cellpadding="2px" cellspacing="0" >';
+	echo "\n<table class=\"debug\" id=\"trips\" frame=\"border\" rules=\"all\" cellpadding=\"2px\" cellspacing=\"0\" >";
 	while ($row = mysql_fetch_assoc($sql_day_trips)) {
-		echo '<tr>';
+		echo "\n<tr>";
 		foreach ($row as $value)
-			echo "<td style=\"background: #{$row['Dept_color']}\">$value</td>";
-		echo '</tr>';
+			echo "\n<td style=\"background: #{$row['Dept_color']}\">$value</td>";
+		echo "\n</tr>";
 	}
-	echo "</table>";
+	echo "\n</table>";
 }
 ?>
 <hr width="100%" />
@@ -204,37 +202,44 @@ if (!is_null($sql_day_trips)){
 	</tr>
 	<tr>
 		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[0]['date'] . "</span><br>" . $WeekDay[0]['day']; ?></td>
+		<? echo "<span class=\"date\">" . $WeekDay[0]['date']
+			. "</span><br>" . $WeekDay[0]['day']; ?></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="date" id="today">
+		<? echo "\n<span class=\"date\">" . $WeekDay[1]['date']
+			. "</span><br>" . $WeekDay[1]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[1]['date'] . "</span><br>" . $WeekDay[1]['day']; ?></td>
+		<? echo "\n<span class=\"date\">" . $WeekDay[2]['date']
+			. "</span><br>" . $WeekDay[2]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[2]['date'] . "</span><br>" . $WeekDay[2]['day']; ?></td>
+		<? echo "<span class=\"date\">" . $WeekDay[3]['date']
+			. "</span><br>" . $WeekDay[3]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[3]['date'] . "</span><br>" . $WeekDay[3]['day']; ?></td>
+		<? echo "<span class=\"date\">" . $WeekDay[4]['date']
+			. "</span><br>" . $WeekDay[4]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[4]['date'] . "</span><br>" . $WeekDay[4]['day']; ?></td>
+		<? echo "<span class=\"date\">" . $WeekDay[5]['date']
+			. "</span><br>" . $WeekDay[5]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[5]['date'] . "</span><br>" . $WeekDay[5]['day']; ?></td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td class="date">
-		<? echo "<span class=\"date\">" . $WeekDay[6]['date'] . "</span><br>" . $WeekDay[6]['day']; ?></td>
+		<? echo "<span class=\"date\">" . $WeekDay[6]['date']
+			. "</span><br>" . $WeekDay[6]['day']; ?></td>
 		<td>&nbsp;</td>
 	</tr>
 </table>

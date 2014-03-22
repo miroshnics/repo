@@ -21,6 +21,7 @@ div#main_table_div{position: relative;}
 
 table#mtbl_days {position: relative; width: 100%; margin: auto;}
 table#mtbl_days td.date {text-align: center; font-size: 16px; background: #eeeeee;}
+table#mtbl_days td.date#today {background: #55eeff;}
 table#mtbl_days td.date span.date {font-size: 26px;}
 
 td#mtbl_td_header{padding-left: 30px;}
