@@ -1,9 +1,23 @@
 <?
+function write_daycal_table($N_f) {
+	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >\n";
+	for ($i=0; $i<9; $i++) {
+		echo "<tr>";
+		echo "<td class=\"hour\">" . ($i+9) . ":00</td>";
+		echo "<td class=\"driver1\"></td>";
+		echo "<td class=\"driver2\"></td>";
+		echo "<td class=\"driver3\"></td>";
+		echo "</tr>\n";
+	}
+	echo "\n</table>";
+
+}
 
 /* Настройка локали */
 setlocale(LC_ALL, 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251', 'russian');
 date_default_timezone_set("Europe/Moscow");
 
+/* Главная таблица: формирование колонки с датами и днями недели */
 for ($i=0; $i<7; $i++) {
 	$WeekDay[$i]['nixtime'] = mktime(0, 0, 0, date("m"), date("d")+($i-1), date("Y"));
 	$WeekDay[$i]['day'] = ucfirst(strftime("%A", $WeekDay[$i]['nixtime']));
@@ -37,7 +51,7 @@ $str = "SELECT
 	WHERE tbl_Drivers.fuel_id = tbl_Fuels.id
 	ORDER by Driver_id asc;";
 $sql_drivers = mysql_query($str);
-if (!$sql_drivers) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
+if (!$sql_drivers) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error() . "<br />";
 
 /* Загружаем глобальные данные о ближайших поездках */
 $str = "SELECT
@@ -178,10 +192,9 @@ if (!is_null($sql_day_trips)){
 
 
 <!-- **************************** LEFT MAINTABLE **************************** -->
-<div id="main_table_div">
+<div class="main_table_div">
 
-<? for ($i=0; $i<7; $i++) $day[$i] = ucfirst(strftime("%A", mktime(0, 0, 0, date("m"), date("d")+($i-3), date("Y")))); ?>
-<br>
+<? /*for ($i=0; $i<7; $i++) $day[$i] = ucfirst(strftime("%A", mktime(0, 0, 0, date("m"), date("d")+($i-3), date("Y"))));*/ ?>
 <table id="mtbl_days" frame="border" rules="all" cellpadding="2px" cellspacing="2px" >
 	<tr><td>&nbsp;</td>
 	<td id="mtbl_td_header">
@@ -204,48 +217,49 @@ if (!is_null($sql_day_trips)){
 		<td class="date">
 		<? echo "<span class=\"date\">" . $WeekDay[0]['date']
 			. "</span><br>" . $WeekDay[0]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(0); ?></td>
 	</tr>
 	<tr>
 		<td class="date" id="today">
 		<? echo "\n<span class=\"date\">" . $WeekDay[1]['date']
 			. "</span><br>" . $WeekDay[1]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(1); ?></td>
 	</tr>
 	<tr>
 		<td class="date">
 		<? echo "\n<span class=\"date\">" . $WeekDay[2]['date']
 			. "</span><br>" . $WeekDay[2]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(2); ?></td>
 	</tr>
 	<tr>
 		<td class="date">
 		<? echo "<span class=\"date\">" . $WeekDay[3]['date']
 			. "</span><br>" . $WeekDay[3]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(3); ?></td>
 	</tr>
 	<tr>
 		<td class="date">
 		<? echo "<span class=\"date\">" . $WeekDay[4]['date']
 			. "</span><br>" . $WeekDay[4]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(4); ?></td>
 	</tr>
 	<tr>
 		<td class="date">
 		<? echo "<span class=\"date\">" . $WeekDay[5]['date']
 			. "</span><br>" . $WeekDay[5]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(5); ?></td>
 	</tr>
 	<tr>
 		<td class="date">
 		<? echo "<span class=\"date\">" . $WeekDay[6]['date']
 			. "</span><br>" . $WeekDay[6]['day']; ?></td>
-		<td>&nbsp;</td>
+		<td class="day_cal"><? write_daycal_table(6); ?></td>
 	</tr>
 </table>
 
 </div>
 <!-- LEFT MAINTABLE -->
+
 
 <? /* Закрываем соединение */
     mysql_close($link); ?>
