@@ -261,6 +261,7 @@ if (!is_null($sql_day_trips)){
 <!-- LEFT MAINTABLE -->
 
 
+
 <? /* Закрываем соединение */
     mysql_close($link); ?>
 
