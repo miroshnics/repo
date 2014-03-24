@@ -1,9 +1,9 @@
-<?
-if(!$link) die("ÕÂ‚ÓÁÏÓÊÌÓ ÔÓ‰ÍÎ˛˜ËÚ¸Òˇ Í ÒÂ‚ÂÛ —”¡ƒ: " . mysql_error());
+Ôªø<?
+if(!$link) die("–ù–µ–≤–æ–∑–º–æ–∂–Ω–æ –ø–æ–¥–∫–ª—é—á–∏—Ç—å—Å—è –∫ —Å–µ—Ä–≤–µ—Ä—É –°–£–ë–î: " . mysql_error());
 
-/* ƒÓ·‡‚ÎˇÂÏ ‚ ¡ƒ ÌÓ‚Ó„Ó ‚Ó‰ËÚÂÎˇ */
+/* –î–æ–±–∞–≤–ª—è–µ–º –≤ –ë–î –Ω–æ–≤–æ–≥–æ –≤–æ–¥–∏—Ç–µ–ª—è */
 /*$str = "INSERT INTO tbl_Drivers (name, sec_name, last_name, car, fuel) VALUES( '{$_POST['name']}' ,  '{$_POST['sec_name']}' , '{$_POST['last_name']}', '{$_POST['car']}', '{$fuel_id}');";
-if (!mysql_query($str)) echo 'Œ¯Ë·Í‡ ÔË ‰Ó·‡‚ÎÂÌËË ‚ ¡ƒ ÌÓ‚Ó„Ó ‚Ó‰ËÚÂÎˇ: ' . mysql_error() . "<br />";*/
+if (!mysql_query($str)) echo '–û—à–∏–±–∫–∞ –ø—Ä–∏ –¥–æ–±–∞–≤–ª–µ–Ω–∏–∏ –≤ –ë–î –Ω–æ–≤–æ–≥–æ –≤–æ–¥–∏—Ç–µ–ª—è: ' . mysql_error() . "<br />";*/
 
 echo $_POST['end_point'] . $_POST['date_start'] . $_POST['time_start'] . $_POST['Driver_id'] . "<br />";
 ?>

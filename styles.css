@@ -10,12 +10,7 @@ html {min-width: 580px;}
 body {min-width: 570px;}
 }
 
-/* если ширина окна < 580px */
-@media screen and (max-width: 580px) {
-table#depts {display: none;}
-}
-
-table#depts {position: absolute; float: right; right: 15px; top: 15px; }
+table#depts {position: absolute; float: right; right: 10px; top: 10px; }
 
 .debug {font-size: 10px; outline: 3px dotted red; display: none;}
 

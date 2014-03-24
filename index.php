@@ -36,10 +36,7 @@ $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
 if (!mysql_select_db($dbname, $link)) {
     echo('Не удалось выбрать базу ' . $dbname . ': ' . mysql_error() . "<br />");
 }
-
-/* Настройка подключения к базе данных */
-mysql_query('SET names "cp1251"');
-
+  
 /* Загружаем глобальные данные о водителях */
 $str = "SELECT 
 	tbl_Drivers.id as Driver_id, 
@@ -100,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <link rel="stylesheet" href="styles.css">
 <script type="text/javascript" src="js/scripts.js"></script>
 <script type="text/javascript" src="js/calendar_ru.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
 <body>
