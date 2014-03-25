@@ -218,5 +218,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <? /* Закрываем соединение */
     mysql_close($link); ?>
 
+<h1>Всплывающее окно на JavaScript</h1>
+<p><a href="#" onclick="show_elem('w_parent', 'okno', 'block'); return false">Показать мне его</a></p>
+<div id="w_parent" onclick="show_elem('w_parent', 'okno', 'none'); return false">&nbsp;
+</div>
+<div id="okno" onblur="show_elem('w_parent', 'okno', 'none'); return false">
+<div class="telo-okna">
+  <? include_once 'add_Trip_form.php'; ?>
+</div>
+</div>
+
 </body>
 </html>

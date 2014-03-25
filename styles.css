@@ -37,3 +37,36 @@ td.mtbl_td_header table.mtbl_header {position: relative; width: 100%; text-align
 td.mtbl_td_header table.mtbl_header td {width: 30%; padding: 0;}
 
 td.delim {border-bottom: 1px solid grey;}
+
+/* Всплывающее окно */
+div#w_parent {
+	opacity: 0.5;
+	background: #FFF;
+	width: 100%;
+	height: 100%;
+	display: none;
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 100;
+}
+div#okno {
+	display: none;
+	width: 560px;
+	background-clip: padding-box;
+	background-color: #FFF;
+	box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	border-radius: 6px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	left: 50%;
+	top: 10%;
+	margin-left: -280px;
+	position: fixed;
+	z-index: 1050;
+}
+.telo-okna {
+	position: relative;
+	overflow-y: auto;
+	padding: 15px;
+	max-height: 400px;
+}

@@ -19,3 +19,8 @@ function toggle_open_close(id_spoiler_content) {
 		obj.display = "block";
 	else obj.display = "none";
 }
+
+function show_elem(elem1, elem2, mode) {
+	document.getElementById(elem1).style.display = mode;
+	document.getElementById(elem2).style.display = mode;
+}
