@@ -1,4 +1,4 @@
-<? require 'login.php'; ?>
+<? require_once 'login.php'; ?>
 
 <html>
 <head><title>Онлайн-Диспетчер автопарка: Создание БД</title></head>

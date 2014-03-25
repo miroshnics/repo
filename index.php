@@ -26,7 +26,7 @@ for ($i=0; $i<7; $i++) {
 	else $WeekDay[$i]['is_holiday'] = '';
 }
 
-require 'login.php';
+require_once 'login.php';
 
 /* Соединяемся с сервером СУБД */
 $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
@@ -83,10 +83,10 @@ if (!$sql_day_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	switch ($_POST['action']) {
 	case 'add_Driver':
-		require 'add_Driver.php';
+		require_once 'add_Driver.php';
 		break;
 	case 'add_Trip':
-		require 'add_Trip.php';
+		require_once 'add_Trip.php';
 		break;
 }
 ?>

@@ -1,5 +1,5 @@
 <?
-require 'login.php';
+require_once 'login.php';
 
 /* Соединяемся с сервером СУБД */
 $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
