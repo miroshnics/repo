@@ -10,7 +10,8 @@ html {min-width: 580px;}
 body {min-width: 570px;}
 }
 
-table#depts {position: absolute; float: right; right: 10px; top: 10px; }
+table#depts {position: absolute; float: right; right: 10px; top: 10px;}
+table#depts  td{padding: 2px 5px 2px 5px; text-align: center; width: 140px; border: 1px solid #557;}
 
 .debug {font-size: 10px; outline: 3px dotted red; display: none;}
 
@@ -29,8 +30,8 @@ table.mtbl_days td.date span.date {font-size: 26px;}
 table.mtbl_days td.day_cal table.daycal {font-size: 10px; text-align: center; width: 100%;}
 table.mtbl_days td.day_cal table.daycal td.hour {height:20px; width: 42px; }
 table.mtbl_days td.day_cal table.daycal td.trip {cursor: pointer;}
-table.mtbl_days td.day_cal table.daycal td.trip:hover {outline: 3px solid #5555dd;}
-table.mtbl_days td.day_cal table.daycal tr:hover {background: #ddddff;}
+table.mtbl_days td.day_cal table.daycal td.trip:hover {outline: 2px solid 00a;}
+table.mtbl_days td.day_cal table.daycal tr:hover {background: #ddf;}
 
 
 td.mtbl_td_header{padding-left: 51px;}
