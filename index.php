@@ -19,9 +19,24 @@ function write_daycal_table($N_f) {
 	for ($i=9; $i<18; $i++) {
 		echo "<tr>";
 		echo "<td class=\"hour\">{$i}:00</td>";
-		echo "<td class=\"trip\" driver_id=\"1\" time=\"{$i}:00\" day_num=\"{$N_f}\" onclick=\"show_popup('block', event);\"></td>";
-		echo "<td class=\"trip\" driver_id=\"2\" time=\"{$i}:00\" day_num=\"{$N_f}\" onclick=\"show_popup('block', event);\"></td>";
-		echo "<td class=\"trip\" driver_id=\"3\" time=\"{$i}:00\" day_num=\"{$N_f}\" onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip\" 
+					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
+					driver_id=\"1\" 
+					time=\"{$i}:00\" 
+					day_num=\"{$N_f}\" 
+					onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip\" 
+					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
+					driver_id=\"2\" 
+					time=\"{$i}:00\" 
+					day_num=\"{$N_f}\" 
+					onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip\" 
+					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
+					driver_id=\"3\" 
+					time=\"{$i}:00\" 
+					day_num=\"{$N_f}\" 
+					onclick=\"show_popup('block', event);\"></td>";
 		echo "</tr>\n";
 	}
 	echo "\n</table>";

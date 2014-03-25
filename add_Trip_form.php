@@ -12,7 +12,7 @@ You can add this to make a spoiler:
 	<input type="hidden" name="action" value="add_Trip" />
 	<table>
 	<tr><td><span>Пункт назначения:</span></td><td><input type="textarea" size="45" name="end_point" /></td></tr>
-	<tr><td><span>Дата отправления:</span></td><td><input type="textarea" size="45" name="date_start" placeholder="в формате ДД-ММ" /></td></tr>
+	<tr><td><span>Дата отправления:</span></td><td><input type="textarea" size="45" id="date_start" name="date_start" placeholder="в формате ДД-ММ" /></td></tr>
 	<tr><td><span>Время отправления:</span></td><td><input type="textarea" size="45" id="time_start" name="time_start" placeholder="в формате ЧЧ:ММ" /></td></tr>
 	<tr><td class="delim"><span>Водитель:</span></td><td class="delim"><select size="1" name="Driver_id">
 		<option id="dr1" value="1">В. И. Миронов</option>

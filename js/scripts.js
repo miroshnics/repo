@@ -33,12 +33,15 @@ function show_popup(mode, event) {
 	document.getElementById("debug").innerHTML += event.target.nodeValue;
 	document.getElementById("debug").innerHTML += "<br>event.target.getAttribute(time): ";
 	document.getElementById("debug").innerHTML += event.target.getAttribute("time");
+	document.getElementById("debug").innerHTML += "<br>event.target.getAttribute(date): ";
+	document.getElementById("debug").innerHTML += event.target.getAttribute("date");
 	document.getElementById("debug").innerHTML += "<br>event.button: ";
 	document.getElementById("debug").innerHTML += event.button;
 	document.getElementById("debug").innerHTML += "<br>nodeValue: ";
 	document.getElementById("debug").innerHTML += event.nodeValue;
 	
 	document.getElementById("time_start").value = ptr_cell.getAttribute("time");
+	document.getElementById("date_start").value = ptr_cell.getAttribute("date");
 	document.getElementById("dr"+ptr_cell.getAttribute("driver_id")).selected = 'selected';
 	return false;
 }
