@@ -26,10 +26,11 @@ table.mtbl_days td.date#today {background-color: #fafafa;}
 table.mtbl_days td.date#today+td {background: #ddffdd;}
 table.mtbl_days td.date span.date {font-size: 26px;}
 
-/*td.holiday {background: url('img/bg_holyday.png') !important;}*/
-
 table.mtbl_days td.day_cal table.daycal {font-size: 10px; text-align: center; width: 100%;}
-table.mtbl_days td.day_cal table.daycal td.hour {width: 42px; }
+table.mtbl_days td.day_cal table.daycal td.hour {height:20px; width: 42px; }
+table.mtbl_days td.day_cal table.daycal td.trip {cursor: pointer;}
+table.mtbl_days td.day_cal table.daycal td.trip:hover {outline: 3px solid #5555dd;}
+table.mtbl_days td.day_cal table.daycal tr:hover {background: #ddddff;}
 
 
 td.mtbl_td_header{padding-left: 51px;}
@@ -48,7 +49,7 @@ div#w_parent {
 	left: 0;
 	top: 0;
 	position: fixed;
-	z-index: 100;
+	z-index: 1;
 }
 div#okno {
 	display: none;

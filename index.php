@@ -1,17 +1,4 @@
 <?
-function write_daycal_table($N_f) {
-	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >\n";
-	for ($i=0; $i<9; $i++) {
-		echo "<tr>";
-		echo "<td class=\"hour\">" . ($i+9) . ":00</td>";
-		echo "<td class=\"driver1\"></td>";
-		echo "<td class=\"driver2\"></td>";
-		echo "<td class=\"driver3\"></td>";
-		echo "</tr>\n";
-	}
-	echo "\n</table>";
-}
-
 /* Настройка локали */
 setlocale(LC_ALL, 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251', 'russian');
 date_default_timezone_set("Europe/Moscow");
@@ -24,6 +11,20 @@ for ($i=0; $i<7; $i++) {
 	if ($WeekDay[$i]['day'] == 'Суббота' || $WeekDay[$i]['day'] == 'Воскресенье')
 		$WeekDay[$i]['is_holiday'] = ' holiday';
 	else $WeekDay[$i]['is_holiday'] = '';
+}
+
+/* Формирование почасовых таблиц на день */
+function write_daycal_table($N_f) {
+	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >\n";
+	for ($i=0; $i<9; $i++) {
+		echo "<tr>";
+		echo "<td class=\"hour\">" . ($i+9) . ":00</td>";
+		echo "<td class=\"trip driver1 " . ($i+9) . ":00\" onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip driver2 " . ($i+9) . ":00\" onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip driver3 " . ($i+9) . ":00\" onclick=\"show_popup('block', event);\"></td>";
+		echo "</tr>\n";
+	}
+	echo "\n</table>";
 }
 
 require_once 'login.php';
@@ -123,10 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </tr>
 </table>
 
-<!--hr width="100%" /-->
-<? /*require 'add_Driver_Form.php';*/ ?><!--br-->
-<? /*require 'add_Trip_Form.php';*/ ?>
-
 </div>
 <!--  HEADER  -->
 
@@ -219,14 +216,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     mysql_close($link); ?>
 
 <h1>Всплывающее окно на JavaScript</h1>
-<p><a href="#" onclick="show_elem('w_parent', 'okno', 'block'); return false">Показать мне его</a></p>
-<div id="w_parent" onclick="show_elem('w_parent', 'okno', 'none'); return false">&nbsp;
+<p><a href="#" onclick="show_popup('block', event);">Показать мне его</a></p>
+<div id="w_parent" onclick="show_popup('none', event);">&nbsp;
 </div>
-<div id="okno" onblur="show_elem('w_parent', 'okno', 'none'); return false">
+<div id="okno">
 <div class="telo-okna">
   <? include_once 'add_Trip_form.php'; ?>
 </div>
 </div>
-
+<span id="debug"></span>
 </body>
 </html>

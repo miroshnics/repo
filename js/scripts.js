@@ -20,7 +20,14 @@ function toggle_open_close(id_spoiler_content) {
 	else obj.display = "none";
 }
 
-function show_elem(elem1, elem2, mode) {
-	document.getElementById(elem1).style.display = mode;
-	document.getElementById(elem2).style.display = mode;
+/* 'w_parent', 'okno' */
+function show_popup(mode, event) {
+	document.getElementById('w_parent').style.display = mode;
+	document.getElementById('okno').style.display = mode;
+	document.getElementById("debug").innerHTML = event.type;
+	document.getElementById("debug").innerHTML += " ";
+	document.getElementById("debug").innerHTML += event.target;
+	document.getElementById("debug").innerHTML += " ";
+	document.getElementById("debug").innerHTML += event.button;
+	return false;
 }

@@ -1,9 +1,9 @@
-п»ї<?
-if(!$link) die("РќРµРІРѕР·РјРѕР¶РЅРѕ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє СЃРµСЂРІРµСЂСѓ РЎРЈР‘Р”: " . mysql_error());
+<?
+if(!$link) die("Невозможно подключиться к серверу СУБД: " . mysql_error());
 
-/* Р”РѕР±Р°РІР»СЏРµРј РІ Р‘Р” РЅРѕРІРѕРіРѕ РІРѕРґРёС‚РµР»СЏ */
+/* Добавляем в БД нового водителя */
 /*$str = "INSERT INTO tbl_Drivers (name, sec_name, last_name, car, fuel) VALUES( '{$_POST['name']}' ,  '{$_POST['sec_name']}' , '{$_POST['last_name']}', '{$_POST['car']}', '{$fuel_id}');";
-if (!mysql_query($str)) echo 'РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІ Р‘Р” РЅРѕРІРѕРіРѕ РІРѕРґРёС‚РµР»СЏ: ' . mysql_error() . "<br />";*/
+if (!mysql_query($str)) echo 'Ошибка при добавлении в БД нового водителя: ' . mysql_error() . "<br />";*/
 
 echo $_POST['end_point'] . $_POST['date_start'] . $_POST['time_start'] . $_POST['Driver_id'] . "<br />";
 ?>
