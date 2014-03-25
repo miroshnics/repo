@@ -16,12 +16,12 @@ for ($i=0; $i<7; $i++) {
 /* Формирование почасовых таблиц на день */
 function write_daycal_table($N_f) {
 	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >\n";
-	for ($i=0; $i<9; $i++) {
+	for ($i=9; $i<18; $i++) {
 		echo "<tr>";
-		echo "<td class=\"hour\">" . ($i+9) . ":00</td>";
-		echo "<td class=\"trip driver1 " . ($i+9) . ":00\" onclick=\"show_popup('block', event);\"></td>";
-		echo "<td class=\"trip driver2 " . ($i+9) . ":00\" onclick=\"show_popup('block', event);\"></td>";
-		echo "<td class=\"trip driver3 " . ($i+9) . ":00\" onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"hour\">{$i}:00</td>";
+		echo "<td class=\"trip\" driver_id=\"1\" time=\"{$i}:00\" day_num=\"{$N_f}\" onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip\" driver_id=\"2\" time=\"{$i}:00\" day_num=\"{$N_f}\" onclick=\"show_popup('block', event);\"></td>";
+		echo "<td class=\"trip\" driver_id=\"3\" time=\"{$i}:00\" day_num=\"{$N_f}\" onclick=\"show_popup('block', event);\"></td>";
 		echo "</tr>\n";
 	}
 	echo "\n</table>";
@@ -107,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!-- **************************** HEADER **************************** -->
 <div id="header">
 <h2 >Онлайн-Диспетчер автопарка</h2>
+<span id="debug"></span>
 <a class="debug" href="create_db.php"><input type="button" value="Создать базу данных" /></a>
 <a class="debug" href="init.php"><input type="button" value="Инициализировать базу данных" /></a>
 <a class="debug" href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
@@ -214,16 +215,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <? /* Закрываем соединение */
     mysql_close($link); ?>
-
-<h1>Всплывающее окно на JavaScript</h1>
-<p><a href="#" onclick="show_popup('block', event);">Показать мне его</a></p>
-<div id="w_parent" onclick="show_popup('none', event);">&nbsp;
-</div>
+	
+<!-- Вывод всплывающего окна -->
+<div id="w_parent" onclick="show_popup('none', event);">&nbsp;</div>
 <div id="okno">
-<div class="telo-okna">
-  <? include_once 'add_Trip_form.php'; ?>
+	<div class="telo-okna">
+	<? include_once 'add_Trip_form.php'; ?>
+	</div>
 </div>
-</div>
-<span id="debug"></span>
+
+
 </body>
 </html>
