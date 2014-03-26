@@ -22,15 +22,12 @@ You can add this to make a spoiler:
 	
 	<tr><td class="delim"><span>Водитель:</span></td>
 	<td class="delim"><select size="1" id="Driver_id" name="Driver_id">
-		<option id="dr1" value="1">В. И. Миронов</option>
-		<option id="dr2" value="2">Н. Н. Устов</option>
-		<option id="dr3" value="3">С. И. Хотькин</option>
-	<? /*mysql_data_seek($sql_drivers, 0);
+	<? mysql_data_seek($sql_drivers, 0);
 	$N = 1;
 	while ($row = mysql_fetch_assoc($sql_drivers)) {
-		echo "<option value=\"{$N}\">"
-		 . "{$row['name']} {$row['sec_name']} {$row['last_name']}"
-		 . "</option>"; $N++;} */ ?>	
+		echo "<option id=\"dr{$N}\" value=\"{$N}\">"
+		 . "{$row['name']}&nbsp;{$row['sec_name']}&nbsp;{$row['last_name']}"
+		 . "</option>"; $N++;} ?>	
 	</select></td></tr>
 	
 	<tr><td><span>Заказчик:</span></td><td><input type="textarea" size="45" name="client" /></td></tr>
