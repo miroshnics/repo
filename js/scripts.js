@@ -20,16 +20,28 @@ function toggle_open_close(id_spoiler_content) {
 	else obj.display = "none";
 }
 
-/* 'w_parent', 'okno' */
-function show_popup(mode, event) {
-	/* Выключаем или включаем popup */
-	document.getElementById('w_parent').style.display = mode;
-	document.getElementById('okno').style.display = mode;
+function show_popup(event) {
+	/* Включаем popup */
+	document.getElementById('w_parent').style.display = 'block';
+	document.getElementById('okno').style.display = 'block';
 
 	/* Загружаем в форму данные */
 	ptr_cell = event.target;
 	document.getElementById("time_start").value = ptr_cell.getAttribute("time");
 	document.getElementById("date_start").value = ptr_cell.getAttribute("date");
-	document.getElementById("dr"+ptr_cell.getAttribute("driver_id")).selected = 'selected';
+	document.getElementById("dr"+ptr_cell.getAttribute("driver_id")).selected = 'true';
+	return false;
+}
+
+function hide_popup() {
+	/* Выключаем popup */
+	document.getElementById('w_parent').style.display = 'none';
+	document.getElementById('okno').style.display = 'none';
+	
+	document.getElementById("time_start").value = '';
+	document.getElementById("date_start").value = '';
+	//Развыделим :) выделенный элемент
+	ptr_target = document.getElementById("Driver_id");
+	ptr_target.childNodes[ptr_target.selectedIndex].selected = 'false'; // Unselect selected option in list
 	return false;
 }

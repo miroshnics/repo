@@ -24,19 +24,19 @@ function write_daycal_table($N_f) {
 					driver_id=\"1\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
-					onclick=\"show_popup('block', event);\"></td>";
+					onclick=\"show_popup(event);\"></td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
 					driver_id=\"2\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
-					onclick=\"show_popup('block', event);\"></td>";
+					onclick=\"show_popup(event);\"></td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
 					driver_id=\"3\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
-					onclick=\"show_popup('block', event);\"></td>";
+					onclick=\"show_popup(event);\"></td>";
 		echo "</tr>\n";
 	}
 	echo "\n</table>";
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
-<body onkeyup="show_popup('none', event)">
+<body onkeyup="hide_popup()">
 
 
 <!-- **************************** HEADER **************************** -->
@@ -232,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     mysql_close($link); ?>
 	
 <!-- Вывод всплывающего окна -->
-<div id="w_parent" onclick="show_popup('none', event);">&nbsp;</div>
+<div id="w_parent" onclick="hide_popup();">&nbsp;</div>
 <div id="okno">
 	<div class="telo-okna">
 	<? include_once 'add_Trip_form.php'; ?>
