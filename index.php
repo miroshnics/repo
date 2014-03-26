@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
-<body>
+<body onkeyup="show_popup('none', event)">
 
 
 <!-- **************************** HEADER **************************** -->
@@ -238,7 +238,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	<? include_once 'add_Trip_form.php'; ?>
 	</div>
 </div>
-
 
 </body>
 </html>
