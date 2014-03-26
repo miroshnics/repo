@@ -66,7 +66,16 @@ $str = "SELECT
 	WHERE tbl_Drivers.fuel_id = tbl_Fuels.id
 	ORDER by Driver_id asc;";
 $sql_drivers = mysql_query($str);
-if (!$sql_drivers) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error() . "<br />";
+if (!$sql_drivers) echo 'Ошибка MySQL, не удалось получить данные: ' . mysql_error() . "<br />";
+
+/* Загружаем глобальные данные об отделах */
+$str = "SELECT 
+	tbl_Depts.id as Driver_id, 
+	tbl_Depts.name as name, 
+	tbl_Depts.color as color
+	FROM tbl_Depts;";
+$sql_depts = mysql_query($str);
+if (!$sql_depts) echo 'Ошибка MySQL, не удалось получить данные: ' . mysql_error() . "<br />";
 
 /* Загружаем глобальные данные о ближайших поездках */
 $str = "SELECT
@@ -116,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
-<body onkeyup="hide_popup()">
+<body onkeyup="hide_popup(event, true)">
 
 
 <!-- **************************** HEADER **************************** -->
@@ -131,12 +140,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!-- Отделы Управления -->
 <table id="depts" frame="border" rules="all" cellpadding="3px" cellspacing="0">
 <tr>
-<td style="background: #FF0000">Руководство</td>
-<td style="background: #99CC00">Отдел КНСС</td>
+	<td style="background: #FF0000">Руководство</td>
+	<td style="background: #99CC00">Отдел КНСС</td>
 </tr>
 <tr>
-<td style="background: #FFFF00">Отдел ОПРК</td>
-<td style="background: #00CCFF">Отдел ПД и СМИ</td>
+	<td style="background: #FFFF00">Отдел ОПРК</td>
+	<td style="background: #00CCFF">Отдел ПД и СМИ</td>
 </tr>
 </table>
 
@@ -232,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     mysql_close($link); ?>
 	
 <!-- Вывод всплывающего окна -->
-<div id="w_parent" onclick="hide_popup();">&nbsp;</div>
+<div id="w_parent" onclick="hide_popup(event, false);">&nbsp;</div>
 <div id="okno">
 	<div class="telo-okna">
 	<? include_once 'add_Trip_form.php'; ?>
