@@ -14,7 +14,7 @@ for ($i=0; $i<7; $i++) {
 	else $WeekDay[$i]['is_holiday'] = '';
 }
 
-
+ 
 
 /* Формирование почасовых таблиц на день */
 function write_daycal_table($N_f) {
