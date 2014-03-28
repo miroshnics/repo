@@ -18,32 +18,20 @@ for ($i=0; $i<7; $i++) {
 
 /* Формирование почасовых таблиц на день */
 function write_daycal_table($N_f) {
-	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >\n";
+	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
 	for ($i=9; $i<18; $i++) {
-		echo "<tr>";
-		echo "<td class=\"hour\">{$i}:00</td>";
-		echo "<td class=\"trip\" 
-					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
-					sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\" 
-					driver_id=\"1\" 
-					time=\"{$i}:00\" 
-					day_num=\"{$N_f}\" 
-					onclick=\"show_popup(event);\"></td>";
-		echo "<td class=\"trip\" 
-					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
-					sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\" 
-					driver_id=\"2\" 
-					time=\"{$i}:00\" 
-					day_num=\"{$N_f}\" 
-					onclick=\"show_popup(event);\"></td>";
-		echo "<td class=\"trip\" 
-					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
-					sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\" 
-					driver_id=\"3\" 
-					time=\"{$i}:00\" 
-					day_num=\"{$N_f}\" 
-					onclick=\"show_popup(event);\"></td>";
-		echo "</tr>\n";
+		echo "\n<tr>";
+		echo "\n<td class=\"hour\">{$i}:00</td>";
+		for ($j=0; $j<3; $j++){
+			echo "\n<td class=\"trip\""
+					. " date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\""
+					. " sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\""
+					. " driver_id=\"" . ($j+1) . "\""
+					. " time=\"{$i}:00\""
+					. " day_num=\"{$N_f}\""
+					. " onclick=\"show_popup(event);\"></td>";
+		}
+		echo "\n</tr>";
 	}
 	echo "\n</table>";
 }
@@ -170,27 +158,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 if (!$sql_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 else {
 	$Numm = 1;
-	echo "<table rules='all' frame='border'>";
+	echo "\n<table rules='all' frame='border'>";
 	while ($row = mysql_fetch_row($sql_trips)) {
-		echo "<tr><td>{$Numm}</td>";
+		echo "\n<tr><td>{$Numm}</td>";
 		for ($i=0; $i<count($row);$i++)
-			echo "<td>{$row[$i]}</td>";
-		echo "</tr>";
+			echo "\n<td>{$row[$i]}</td>";
+		echo "\n</tr>";
 		$Numm++;
 	}
-	echo "</table>";
+	echo "\n</table>";
 }
 $Numm = 1;
-echo "<span> Поездки на ближайшие дни:</span>";
-echo "<table rules='all' frame='border'>";
+echo "\n<span> Поездки на ближайшие дни:</span>";
+echo "\n<table rules='all' frame='border'>";
 while ($row = mysql_fetch_row($sql_day_trips)) {
-	echo "<tr><td>{$Numm}</td>";
+	echo "\n<tr>\n<td>{$Numm}</td>";
 	for ($i=0; $i<count($row);$i++)
-		echo "<td>{$row[$i]}</td>";
-	echo "</tr>";
+		echo "\n<td>{$row[$i]}</td>";
+	echo "\n</tr>";
 	$Numm++;
 }
-echo "</table>";
+echo "\n</table>";
 ?>
 </div>
 <!-- END OF DEBUG -->
@@ -238,20 +226,20 @@ echo "</table>";
 	</tr>
 	<tr>
 		<td class="date<? echo $WeekDay[0]['is_holiday']; ?>" id="today" >
-		<? echo "<span class=\"date\">" . $WeekDay[0]['date']
-			. "</span><br>" . $WeekDay[0]['day']; ?></td>
+		<? echo "\n<span class=\"date\">" . $WeekDay[0]['date']
+			. "\n</span><br>" . $WeekDay[0]['day']; ?></td>
 		<td class="day_cal"><? write_daycal_table(0); ?></td>
 	</tr>
 	<tr>
 		<td class="date<? echo $WeekDay[1]['is_holiday']; ?>" >
 		<? echo "\n<span class=\"date\">" . $WeekDay[1]['date']
-			. "</span><br>" . $WeekDay[1]['day']; ?></td>
+			. "\n</span><br>" . $WeekDay[1]['day']; ?></td>
 		<td class="day_cal"><? write_daycal_table(1); ?></td>
 	</tr>
 	<tr>
 		<td class="date<? echo $WeekDay[2]['is_holiday']; ?>" >
 		<? echo "\n<span class=\"date\">" . $WeekDay[2]['date']
-			. "</span><br>" . $WeekDay[2]['day']; ?></td>
+			. "\n</span><br>" . $WeekDay[2]['day']; ?></td>
 		<td class="day_cal"><? write_daycal_table(2); ?></td>
 	</tr>
 </table>
@@ -280,20 +268,20 @@ echo "</table>";
 	</tr>
 	<tr>
 		<td class="date<? echo $WeekDay[3]['is_holiday']; ?>" >
-		<? echo "<span class=\"date\">" . $WeekDay[3]['date']
-			. "</span><br>" . $WeekDay[3]['day']; ?></td>
+		<? echo "\n<span class=\"date\">" . $WeekDay[3]['date']
+			. "\n</span><br>" . $WeekDay[3]['day']; ?></td>
 		<td class="day_cal"><? write_daycal_table(3); ?></td>
 	</tr>
 	<tr>
 		<td class="date<? echo $WeekDay[4]['is_holiday']; ?>" >
-		<? echo "<span class=\"date\">" . $WeekDay[4]['date']
-			. "</span><br>" . $WeekDay[4]['day']; ?></td>
+		<? echo "\n<span class=\"date\">" . $WeekDay[4]['date']
+			. "\n</span><br>" . $WeekDay[4]['day']; ?></td>
 		<td class="day_cal"><? write_daycal_table(4); ?></td>
 	</tr>
 	<tr>
 		<td class="date<? echo $WeekDay[5]['is_holiday']; ?>" >
-		<? echo "<span class=\"date\">" . $WeekDay[5]['date']
-			. "</span><br>" . $WeekDay[5]['day']; ?></td>
+		<? echo "\n<span class=\"date\">" . $WeekDay[5]['date']
+			. "\n</span><br>" . $WeekDay[5]['day']; ?></td>
 		<td class="day_cal"><? write_daycal_table(5); ?></td>
 	</tr>
 </table>
