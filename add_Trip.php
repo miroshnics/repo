@@ -22,4 +22,5 @@ $str = "INSERT
 
 
 if (!mysql_query($str)) echo 'Ошибка при добавлении в БД новой поездки: ' . mysql_error() . "<br />";
+else header("Location: index.php");
 ?>
