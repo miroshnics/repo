@@ -32,7 +32,6 @@ You can add this to make a spoiler:
 	<tr><td><span>Заказчик:</span></td>
 	<td><input autocomplete="on" tabindex="5" type="textarea" size="45" name="client" /></td></tr>
 
-	<? $sql_depts; ?>
 	<tr><td><span>Отдел:</span></td>
 	<td><select tabindex="6" size="1" id="client_dept_id" name="client_dept_id">
 		<? mysql_data_seek($sql_depts, 0);
