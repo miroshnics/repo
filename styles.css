@@ -13,7 +13,7 @@ body {min-width: 570px;}
 table#depts {position: absolute; float: right; right: 10px; top: 10px;}
 table#depts  td{padding: 2px 5px 2px 5px; text-align: center; width: 140px; border: 1px solid #557;}
 
-.debug {font-size: 10px; outline: 3px dotted red; display: none;}
+.debug {font-size: 10px; outline: 3px dotted red;}
 
 div.radio {display: inline;}
 div.radio:hover {background: #f0f0f0;}

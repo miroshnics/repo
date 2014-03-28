@@ -30,7 +30,7 @@ function show_popup(event) {
 	ptr_cell = event.target;
 	document.getElementById("time_start").value = ptr_cell.getAttribute("time");
 	document.getElementById("date_start").value = ptr_cell.getAttribute("date");
-	document.getElementById("sql_date").setAttribute("value", ptr_cell.getAttribute("sql_date"));
+	document.getElementById("sql_date_start").setAttribute("value", ptr_cell.getAttribute("sql_date_start"));
 	document.getElementById("dr"+ptr_cell.getAttribute("driver_id")).selected = 'true';
 	return false;
 }

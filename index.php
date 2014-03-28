@@ -8,7 +8,7 @@ for ($i=0; $i<7; $i++) {
 	$WeekDay[$i]['nixtime'] = mktime(0, 0, 0, date("m"), date("d")+($i-0), date("Y"));
 	$WeekDay[$i]['day'] = ucfirst(strftime("%A", $WeekDay[$i]['nixtime']));
 	$WeekDay[$i]['date'] = date("d.m", $WeekDay[$i]['nixtime']);
-	$WeekDay[$i]['sql_date'] = date("Y.m.d", $WeekDay[$i]['nixtime']);
+	$WeekDay[$i]['sql_date_start'] = date("Y.m.d", $WeekDay[$i]['nixtime']);
 	if ($WeekDay[$i]['day'] == 'Суббота' || $WeekDay[$i]['day'] == 'Воскресенье')
 		$WeekDay[$i]['is_holiday'] = ' holiday';
 	else $WeekDay[$i]['is_holiday'] = '';
@@ -24,21 +24,21 @@ function write_daycal_table($N_f) {
 		echo "<td class=\"hour\">{$i}:00</td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
-					sql_date=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date']) . "\" 
+					sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\" 
 					driver_id=\"1\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
 					onclick=\"show_popup(event);\"></td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
-					sql_date=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date']) . "\" 
+					sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\" 
 					driver_id=\"2\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
 					onclick=\"show_popup(event);\"></td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
-					sql_date=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date']) . "\" 
+					sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\" 
 					driver_id=\"3\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
@@ -134,10 +134,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body onkeyup="hide_popup(event, true)">
 
 
+
 <!-- **************************** HEADER **************************** -->
 <div id="header">
 <h2 >Онлайн-Диспетчер автопарка</h2>
-<span id="debug"></span>
+<span class="debug" id="debug"></span>
+<? $sql_trips = mysql_query("SELECT * FROM tbl_Trips;");
+if (!$sql_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
+else {
+	echo "<table class='debug' rules='all' frame='border'>";
+	while ($row = mysql_fetch_row($sql_trips)) {
+		echo "<tr>";
+		for ($i=0; $i<count($row);$i++)
+			echo "<td>{$row[$i]}</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+?>
 <a class="debug" href="create_db.php"><input type="button" value="Создать базу данных" /></a>
 <a class="debug" href="init.php"><input type="button" value="Инициализировать базу данных" /></a>
 <a class="debug" href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
@@ -157,7 +171,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 </div>
 <!--  HEADER  -->
-
 
 
 <!-- **************************** LEFT MAINTABLE **************************** -->

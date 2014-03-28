@@ -9,7 +9,7 @@ You can add this to make a spoiler:
 
 <form id="add_Trip_form" action="<?=$_SERVER['PHP_SELF'] /* index.php */?>" method="post" >
 	<input type="hidden" name="action" value="add_Trip" />
-	<input type="hidden" name="sql_date" id="sql_date" value="" />
+	<input type="hidden" name="sql_date_start" id="sql_date_start" value="" />
 	<table>
 	<tr><td><span>Пункт назначения:</span></td>
 	<td><input  autofocus autocomplete="on" tabindex="1" type="textarea" size="45" id="end_point" name="end_point" /></td></tr>
@@ -33,17 +33,17 @@ You can add this to make a spoiler:
 	<td><input autocomplete="on" tabindex="5" type="textarea" size="45" name="client" /></td></tr>
 
 	<tr><td><span>Отдел:</span></td>
-	<td><select tabindex="6" size="1" id="client_dept_id" name="client_dept_id">
-		<? mysql_data_seek($sql_depts, 0);
-		$N = 1;
-		while ($row = mysql_fetch_assoc($sql_depts)) {
-			echo "<option id=\"dept{$N}\"  value=\"{$N}\">"
-			 . "{$row['name']}"
-			 . "</option>"; $N++;} ?>
-	</select>
+	<td>
+		<select tabindex="6" size="1" id="client_dept_id" name="client_dept_id">
+			<? mysql_data_seek($sql_depts, 0);
+			$N = 1;
+			while ($row = mysql_fetch_assoc($sql_depts)) {
+				echo "<option id=\"dept{$N}\"  value=\"{$N}\">"
+				 . "{$row['name']}"
+				 . "</option>"; $N++;} ?>
+		</select>
 	</td>
 	<!-- -----============================----- -->
-	
 	<tr class="delim"><td colspan="2"><hr color="#eee" size="8px"/></td></tr>
 	
 	</tr>
