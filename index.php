@@ -138,20 +138,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!-- **************************** HEADER **************************** -->
 <div id="header">
 <h2 >Онлайн-Диспетчер автопарка</h2>
-<span class="debug" id="debug"></span>
-<? $sql_trips = mysql_query("SELECT * FROM tbl_Trips;");
+
+<!-- DEBUG -->
+<div  class="debug">
+<span id="debug"></span>
+
+<span> Все поездки:</span>
+
+<? $sql_trips = mysql_query("SELECT
+	tbl_Trips.id as trip_id,
+	tbl_Trips.start_point as start_point,
+	tbl_Trips.end_point as end_point,
+	tbl_Trips.time_start as time_start,
+	tbl_Trips.time_end as time_end,
+	tbl_Trips.dlina as dlina,
+	
+	tbl_Drivers.name as Driver_name,
+	tbl_Drivers.sec_name as Driver_sec_name,
+	tbl_Drivers.last_name as Driver_last_name,
+	
+	tbl_Trips.client as client,
+	tbl_Depts.name as Dept_name,
+	tbl_Depts.color as Dept_color
+	
+	FROM tbl_Trips, tbl_Drivers, tbl_Depts
+	
+	WHERE 
+		(tbl_Trips.Driver_id = tbl_Drivers.id)
+		AND (tbl_Trips.client_dept_id = tbl_Depts.id)
+	ORDER BY tbl_Trips.time_start;");
 if (!$sql_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 else {
-	echo "<table class='debug' rules='all' frame='border'>";
+	$Numm = 1;
+	echo "<table rules='all' frame='border'>";
 	while ($row = mysql_fetch_row($sql_trips)) {
-		echo "<tr>";
+		echo "<tr><td>{$Numm}</td>";
 		for ($i=0; $i<count($row);$i++)
 			echo "<td>{$row[$i]}</td>";
 		echo "</tr>";
+		$Numm++;
 	}
 	echo "</table>";
 }
+$Numm = 1;
+echo "<span> Поездки на ближайшие дни:</span>";
+echo "<table rules='all' frame='border'>";
+while ($row = mysql_fetch_row($sql_day_trips)) {
+	echo "<tr><td>{$Numm}</td>";
+	for ($i=0; $i<count($row);$i++)
+		echo "<td>{$row[$i]}</td>";
+	echo "</tr>";
+	$Numm++;
+}
+echo "</table>";
 ?>
+</div>
+<!-- END OF DEBUG -->
+
 <a class="debug" href="create_db.php"><input type="button" value="Создать базу данных" /></a>
 <a class="debug" href="init.php"><input type="button" value="Инициализировать базу данных" /></a>
 <a class="debug" href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
