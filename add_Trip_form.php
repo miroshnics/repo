@@ -38,9 +38,10 @@ You can add this to make a spoiler:
 			<? mysql_data_seek($sql_depts, 0);
 			$N = 1;
 			while ($row = mysql_fetch_assoc($sql_depts)) {
-				echo "<option id=\"dept{$N}\"  value=\"{$N}\">"
+				echo "\n\t<option id=\"dept{$N}\"  value=\"{$N}\">"
 				 . "{$row['name']}"
 				 . "</option>"; $N++;} ?>
+		
 		</select>
 	</td>
 	<!-- -----============================----- -->
