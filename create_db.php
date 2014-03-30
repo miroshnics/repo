@@ -13,12 +13,12 @@ $link = mysql_connect($dblocation, $dbuser, $dbpasswd)
 	or die("Невозможно подключиться к серверу СУБД: " . mysql_error());
 	
 /* Настройка подключения к базе данных */
+setlocale(LC_ALL, 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251', 'russian');
 $datass = mysql_set_charset('cp1251', $link);
 //mysql_query('SET names "cp1251"');
 $datass .= mysql_query ("SET character_set_client='cp1251'");  
 $datass .= mysql_query ("SET character_set_results='cp1251'");  
 $datass .= mysql_query ("SET collation_connection='cp1251_general_ci'");
-echo $datass;
 	
 /* Создаем базу данных db_Dispetcher */
 if (!mysql_query('CREATE DATABASE ' . $dbname . ';', $link))

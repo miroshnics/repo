@@ -50,3 +50,44 @@ function hide_popup(event, is_key) {
 	}
 	return false;
 }
+
+function init_display() {
+	//return;
+	document.getElementById("debug2").innerHTML = "0 ";
+	var td_array = new Array();
+	document.getElementById("debug2").innerHTML += "1 ";
+	td_array = Cls("td", "trip");
+	document.getElementById("debug2").innerHTML += "2 ";
+	var par_table;
+	document.getElementById("debug2").innerHTML += "3 ";
+	var l = td_array.length;
+	for(var k=0; k<l; k++) {
+		document.write("td_array[" + k + "]=" + td_array[k] + "<br />");
+	}
+	for (elem in td_array) {
+	document.getElementById("debug2").innerHTML += "n ";
+	//what the bug??? why td_array[0]=[object HTMLTableCellElement]???
+	//	par_table = elem.parentNode.parentNode.parentNode;
+	document.getElementById("debug2").innerHTML += "n+1 ";
+	//	elem.style.width = (par_table.style.width - 46)/3;
+	document.getElementById("debug2").innerHTML += "n+2 ";
+	}
+	document.getElementById("debug2").innerHTML += "end ";
+	return false;
+}
+
+function Cls(tag, FindClass){
+	var allElem, arrE = [], i;
+	if(document.getElementsByClassName){
+		return document.getElementsByClassName(FindClass);
+	}
+	else if(document.querySelectorAll){
+		return document.querySelectorAll("."+FindClass);
+	}
+	allElem = document.body.getElementsByTagName(tag);
+	i = allElem.length;
+	while(i--){
+		if(allElem[i].className == FindClass) arrE.push(allElem[i]);
+	};
+	return arrE;
+}

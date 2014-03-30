@@ -3,39 +3,6 @@
 setlocale(LC_ALL, 'ru_RU.CP1251', 'rus_RUS.CP1251', 'Russian_Russia.1251', 'russian');
 date_default_timezone_set("Europe/Moscow");
 
-/* Главная таблица: формирование колонки с датами и днями недели */
-for ($i=0; $i<7; $i++) {
-	$WeekDay[$i]['nixtime'] = mktime(0, 0, 0, date("m"), date("d")+($i-0), date("Y"));
-	$WeekDay[$i]['day'] = ucfirst(strftime("%A", $WeekDay[$i]['nixtime']));
-	$WeekDay[$i]['date'] = date("d.m", $WeekDay[$i]['nixtime']);
-	$WeekDay[$i]['sql_date_start'] = date("Y.m.d", $WeekDay[$i]['nixtime']);
-	if ($WeekDay[$i]['day'] == 'Суббота' || $WeekDay[$i]['day'] == 'Воскресенье')
-		$WeekDay[$i]['is_holiday'] = ' holiday';
-	else $WeekDay[$i]['is_holiday'] = '';
-}
-
- 
-
-/* Формирование почасовых таблиц на день */
-function write_daycal_table($N_f) {
-	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
-	for ($i=9; $i<18; $i++) {
-		echo "\n<tr>";
-		echo "\n<td class=\"hour\">{$i}:00</td>";
-		for ($j=0; $j<3; $j++){
-			echo "\n<td class=\"trip\""
-					. " date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\""
-					. " sql_date_start=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date_start']) . "\""
-					. " driver_id=\"" . ($j+1) . "\""
-					. " time=\"{$i}:00\""
-					. " day_num=\"{$N_f}\""
-					. " onclick=\"show_popup(event);\"></td>";
-		}
-		echo "\n</tr>";
-	}
-	echo "\n</table>";
-}
-
 require_once 'login.php';
 
 /* Соединяемся с сервером СУБД */
@@ -79,6 +46,7 @@ $str = "SELECT
 	tbl_Trips.time_start as time_start,
 	tbl_Trips.time_end as time_end,
 	tbl_Trips.dlina as dlina,
+	tbl_Trips.Driver_id as driver_id,
 	
 	tbl_Drivers.name as Driver_name,
 	tbl_Drivers.sec_name as Driver_sec_name,
@@ -91,12 +59,78 @@ $str = "SELECT
 	FROM tbl_Trips, tbl_Drivers, tbl_Depts
 	
 	WHERE 
-		(TO_DAYS(NOW()) - TO_DAYS(tbl_Trips.time_start) < 5)
+		((TO_DAYS(tbl_Trips.time_start) - TO_DAYS(NOW())) BETWEEN 0 AND 6)
 		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
 		AND (tbl_Trips.client_dept_id = tbl_Depts.id)
 	ORDER BY tbl_Trips.time_start;";
-$sql_day_trips = mysql_query($str);
-if (!$sql_day_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
+$sql_week_trips = mysql_query($str);
+if (!$sql_week_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
+else {
+	/* Обрабатываем результат запроса */
+	$G_Trips = array();
+	$i=0;
+	while ($row = mysql_fetch_assoc($sql_week_trips)) {
+		$G_Trips[$i] = $row;
+		$i++;
+	}
+}
+
+/* Главная таблица: формирование колонки с датами и днями недели */
+for ($i=0; $i<7; $i++) {
+	$WeekDay[$i]['nixtime'] = mktime(0, 0, 0, date("m"), date("d")+($i-0), date("Y"));
+	$WeekDay[$i]['day'] = ucfirst(strftime("%A", $WeekDay[$i]['nixtime']));
+	$WeekDay[$i]['date'] = date("d.m", $WeekDay[$i]['nixtime']);
+	$WeekDay[$i]['full_date'] = date("d.m.Y", $WeekDay[$i]['nixtime']);
+	$WeekDay[$i]['sql_date_start'] = date("Y-m-d", $WeekDay[$i]['nixtime']);
+	if ($WeekDay[$i]['day'] == 'Суббота' || $WeekDay[$i]['day'] == 'Воскресенье')
+		$WeekDay[$i]['is_holiday'] = ' holiday';
+	else $WeekDay[$i]['is_holiday'] = '';
+}
+
+
+
+/* Формирование почасовых таблиц на день */
+function write_daycal_table($N_f) {
+	$cur_day = $GLOBALS['WeekDay'][$N_f];
+
+	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
+	for ($i=9; $i<18; $i++) { // цикл по часам
+		echo "\n<tr>";
+		echo "\n<td class=\"hour\">{$i}:00</td>";
+		for ($j=0; $j<3; $j++){ // цикл по водителям
+			echo "\n<td class=\"trip\""
+				. " date=\"" . ($cur_day['full_date']) . "\""
+				. " sql_date_start=\"" . ($cur_day['sql_date_start']) . "\""
+				. " driver_id=\"" . ($j+1) . "\""
+				. " time=\"{$i}:00\""
+				. " day_num=\"{$N_f}\""
+				. " onclick=\"show_popup(event);\">";
+			
+			/* Добавляем информацию о поездках */
+			
+			// если сегодня и в это время и на этого водителя есть поездка
+			$flag = 0;
+			$hour = array();
+			
+			foreach ($GLOBALS['G_Trips'] as $key=>$cur_trip) {
+				$clock_time = explode(" ", $cur_trip['time_start']);
+				$hour = explode(":", $clock_time[1]);
+				if (
+					(stripos($cur_trip['time_start'], $cur_day['sql_date_start']) !== false )
+					&& (($j+1) == $cur_trip['driver_id']) 
+					&& ($hour[0] == $i)) {$flag = 1;break;}
+			}
+			
+			// выводим данные о поездке:
+			if ($flag == 1) echo "<div style=\"position: relative; width: 100%; height: 3px; background: #00ff00; \">&nbsp;</div>";
+			
+			echo "</td>";
+		}
+		echo "\n</tr>";
+	}
+	echo "\n</table>";
+}
+
 
 /* Подключаем модули обработки форм, если есть POST-запрос */
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -115,11 +149,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <title>Онлайн-Диспетчер автопарка</title>
 <link rel="stylesheet" href="styles.css">
 <script type="text/javascript" src="js/scripts.js"></script>
-<script type="text/javascript" src="js/calendar_ru.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
-<body onkeyup="hide_popup(event, true)">
+<body onkeyup="hide_popup(event, true);" onload="init_display()" >
 
 
 
@@ -129,56 +162,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <!-- DEBUG -->
 <div  class="debug">
-<span id="debug"></span>
-
-<span> Все поездки:</span>
-
-<? $sql_trips = mysql_query("SELECT
-	tbl_Trips.id as trip_id,
-	tbl_Trips.start_point as start_point,
-	tbl_Trips.end_point as end_point,
-	tbl_Trips.time_start as time_start,
-	tbl_Trips.time_end as time_end,
-	tbl_Trips.dlina as dlina,
-	
-	tbl_Drivers.name as Driver_name,
-	tbl_Drivers.sec_name as Driver_sec_name,
-	tbl_Drivers.last_name as Driver_last_name,
-	
-	tbl_Trips.client as client,
-	tbl_Depts.name as Dept_name,
-	tbl_Depts.color as Dept_color
-	
-	FROM tbl_Trips, tbl_Drivers, tbl_Depts
-	
-	WHERE 
-		(tbl_Trips.Driver_id = tbl_Drivers.id)
-		AND (tbl_Trips.client_dept_id = tbl_Depts.id)
-	ORDER BY tbl_Trips.time_start;");
-if (!$sql_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
-else {
+<span id="debug"><? 
+print_r($G_Trips); ?></span>
+<br/>
+<span id="debug2"></span>
+<br/>
+<?
+if (isset($sql_week_trips)) {
 	$Numm = 1;
+	mysql_data_seek($sql_week_trips, 0);
+	echo "\n<span> Поездки на ближайшие дни:</span>";
+
 	echo "\n<table rules='all' frame='border'>";
-	while ($row = mysql_fetch_row($sql_trips)) {
-		echo "\n<tr><td>{$Numm}</td>";
-		for ($i=0; $i<count($row);$i++)
-			echo "\n<td>{$row[$i]}</td>";
+	foreach ($G_Trips as $c_day) {
+		echo "\n<tr>";
+		foreach ($c_day as $key=>$value) {
+			echo "\n<td>" . $value . "</td>";
+		}
 		echo "\n</tr>";
 		$Numm++;
 	}
 	echo "\n</table>";
 }
-$Numm = 1;
-echo "\n<span> Поездки на ближайшие дни:</span>";
-echo "\n<table rules='all' frame='border'>";
-while ($row = mysql_fetch_row($sql_day_trips)) {
-	echo "\n<tr>\n<td>{$Numm}</td>";
-	for ($i=0; $i<count($row);$i++)
-		echo "\n<td>{$row[$i]}</td>";
-	echo "\n</tr>";
-	$Numm++;
-}
-echo "\n</table>";
 ?>
 </div>
 <!-- END OF DEBUG -->
