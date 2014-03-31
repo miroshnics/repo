@@ -60,9 +60,10 @@ function init_display() {
 	document.getElementById("debug2").innerHTML += "2 ";
 	var par_table;
 	document.getElementById("debug2").innerHTML += "3 ";
+	document.getElementById("debug3").innerHTML = "";
 	var l = td_array.length;
 	for(var k=0; k<l; k++) {
-		document.write("td_array[" + k + "]=" + td_array[k] + "<br />");
+		document.getElementById("debug3").innerHTML += "td_array[" + k + "]=" + td_array[k] + "<br />");
 	}
 	for (elem in td_array) {
 	document.getElementById("debug2").innerHTML += "n ";

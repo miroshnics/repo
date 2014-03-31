@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 print_r($G_Trips); ?></span>
 <br/>
 <span id="debug2"></span>
+<span id="debug3"></span>
 <br/>
 <?
 if (isset($sql_week_trips)) {
