@@ -2,7 +2,7 @@
 if(!$link) die("Невозможно подключиться к серверу СУБД: " . mysql_error());
 
 $time_end = $_POST['time_end'];
-if ($_POST['time_end'] == "") $time_end = $_POST['sql_date_start'] . $_POST['time_start'];
+if ($_POST['time_end'] == "") $time_end = $_POST['sql_date_start'] . " " . $_POST['time_start'];
 
 $dlina = $_POST['dlina'];
 if ($_POST['dlina'] == "") $dlina = 0;

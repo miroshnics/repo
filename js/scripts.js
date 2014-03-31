@@ -51,7 +51,7 @@ function hide_popup(event, is_key) {
 	return false;
 }
 
-function init_display() {
+function init_display() {/*
 	//return;
 	document.getElementById("debug2").innerHTML = "0 ";
 	var td_array = new Array();
@@ -73,7 +73,7 @@ function init_display() {
 	//	elem.style.width = (par_table.style.width - 46)/3;
 	document.getElementById("debug2").innerHTML += "n+2 ";
 	}
-	document.getElementById("debug2").innerHTML += "end ";
+	document.getElementById("debug2").innerHTML += "end ";*/
 	return false;
 }
 
