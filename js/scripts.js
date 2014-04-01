@@ -63,7 +63,6 @@ function init_display() {
 		document.getElementById("debug3").innerHTML += "td_array[" + k + "] = " + td_array[k] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		par_table[k] = td_array[k].parentNode.parentNode.parentNode;
 		document.getElementById("debug3").innerHTML += "par_table[" + k + "] = " + par_table[k]/* + "<br />"*/;
-		//document.getElementById("debug3").innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;td_array[k].style.width = " + td_array[k].style.width;
 		document.getElementById("debug3").innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;par_table.scrollWidth = " + par_table.scrollWidth + "<br />";
 		td_array[k].style.width = ((par_table.width - 46)/3);
 	}

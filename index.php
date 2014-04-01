@@ -92,11 +92,18 @@ for ($i=0; $i<7; $i++) {
 /* Формирование почасовых таблиц на день */
 function write_daycal_table($N_f) {
 	$cur_day = $GLOBALS['WeekDay'][$N_f];
-
-	echo "\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
+		
+		echo "\n<table class=\"day_content\" border=\"0\" frame=\"void\" rules=\"none\" cellpadding=\"0\" cellspacing=\"0\" >\n<tr>";
+		
+		echo "\n<td class=\"hours_content\" width=\"45px;\">";
+		echo "\n<table class=\"hours\" frame=\"border\" rules=\"all\" cellpadding=\"0\" cellspacing=\"0\" >";
+		for ($i=9; $i<18; $i++)
+			echo "\n<tr>\n<td class=\"hour\">{$i}:00</td></tr>";
+		echo "</table>\n</td>";
+	
+	echo "\n<td>\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
 	for ($i=9; $i<18; $i++) { // цикл по часам
 		echo "\n<tr>";
-		echo "\n<td class=\"hour\">{$i}:00</td>";
 		for ($j=0; $j<3; $j++){ // цикл по водителям
 		
 		// ищем поездку на данный по циклу день и в данное время и на данного водителя
@@ -133,7 +140,7 @@ function write_daycal_table($N_f) {
 		}
 		echo "\n</tr>";
 	}
-	echo "\n</table>";
+	echo "\n</table>\n</td></tr></table>\n";
 }
 
 
@@ -157,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
-<body onkeyup="hide_popup(event, true);" onload="init_display();" >
+<body onkeyup="hide_popup(event, true);" >
 
 
 
