@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 </head>
 
-<body onkeyup="hide_popup(event, true);" onload="init_display()" >
+<body onkeyup="hide_popup(event, true);" onload="init_display();" >
 
 
 
@@ -165,8 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <span id="debug"><? 
 print_r($G_Trips); ?></span>
 <br/>
-<span id="debug2"></span>
-<span id="debug3"></span>
+<span id="debug2" style="color: red;">debug2: </span>
+<br/>
+<span id="debug3" style="color: green;">debug3: </span>
 <br/>
 <?
 if (isset($sql_week_trips)) {

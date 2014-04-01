@@ -51,29 +51,23 @@ function hide_popup(event, is_key) {
 	return false;
 }
 
-function init_display() {/*
+function init_display() {
 	//return;
-	document.getElementById("debug2").innerHTML = "0 ";
+	var par_table = new Array();
 	var td_array = new Array();
-	document.getElementById("debug2").innerHTML += "1 ";
 	td_array = Cls("td", "trip");
-	document.getElementById("debug2").innerHTML += "2 ";
-	var par_table;
-	document.getElementById("debug2").innerHTML += "3 ";
-	document.getElementById("debug3").innerHTML = "";
 	var l = td_array.length;
+	document.getElementById("debug3").innerHTML += "td_array.length: "+l;
+	document.getElementById("debug3").innerHTML += "<br />";
 	for(var k=0; k<l; k++) {
-		document.getElementById("debug3").innerHTML += "td_array[" + k + "]=" + td_array[k] + "<br />");
+		document.getElementById("debug3").innerHTML += "td_array[" + k + "] = " + td_array[k] + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		par_table[k] = td_array[k].parentNode.parentNode.parentNode;
+		document.getElementById("debug3").innerHTML += "par_table[" + k + "] = " + par_table[k]/* + "<br />"*/;
+		//document.getElementById("debug3").innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;td_array[k].style.width = " + td_array[k].style.width;
+		document.getElementById("debug3").innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;par_table.scrollWidth = " + par_table.scrollWidth + "<br />";
+		td_array[k].style.width = ((par_table.width - 46)/3);
 	}
-	for (elem in td_array) {
-	document.getElementById("debug2").innerHTML += "n ";
-	//what the bug??? why td_array[0]=[object HTMLTableCellElement]???
-	//	par_table = elem.parentNode.parentNode.parentNode;
-	document.getElementById("debug2").innerHTML += "n+1 ";
-	//	elem.style.width = (par_table.style.width - 46)/3;
-	document.getElementById("debug2").innerHTML += "n+2 ";
-	}
-	document.getElementById("debug2").innerHTML += "end ";*/
+	document.getElementById("debug2").innerHTML += "end ";
 	return false;
 }
 
