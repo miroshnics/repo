@@ -172,41 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <div id="header">
 <h2 >Онлайн-Диспетчер автопарка</h2>
 
-<!-- DEBUG -->
-<div  class="debug">
-<span id="debug"><? 
-print_r($G_Trips); ?></span>
-<br/>
-<span id="debug2" style="color: red;">debug2: </span>
-<br/>
-<span id="debug3" style="color: green;">debug3: </span>
-<br/>
-<?
-if (isset($sql_week_trips)) {
-	$Numm = 1;
-	mysql_data_seek($sql_week_trips, 0);
-	echo "\n<span> Поездки на ближайшие дни:</span>";
-
-	echo "\n<table rules='all' frame='border'>";
-	foreach ($G_Trips as $c_day) {
-		echo "\n<tr>";
-		foreach ($c_day as $key=>$value) {
-			echo "\n<td>" . $value . "</td>";
-		}
-		echo "\n</tr>";
-		$Numm++;
-	}
-	echo "\n</table>";
-}
-?>
-</div>
-<!-- END OF DEBUG -->
-
-<a class="debug" href="create_db.php"><input type="button" value="Создать базу данных" /></a>
-<a class="debug" href="init.php"><input type="button" value="Инициализировать базу данных" /></a>
-<a class="debug" href="uninit.php"><input type="button" value="Удалить базу данных" /></a>
-<br />
-
 <!-- Отделы Управления -->
 <table id="depts" frame="border" rules="all" cellpadding="3px" cellspacing="0">
 <tr>

@@ -10,7 +10,7 @@ html {min-width: 580px;}
 body {min-width: 570px;}
 }
 
-table#depts {position: absolute; float: right; right: 10px; top: 10px;}
+table#depts {position: absolute; float: right; right: 5px; top: 5px;}
 table#depts  td{padding: 2px 5px 2px 5px; text-align: center; width: 140px; border: 1px solid #557;}
 
 .debug {font-size: 10px; outline: 3px dotted red;}
