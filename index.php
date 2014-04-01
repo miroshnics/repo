@@ -98,31 +98,36 @@ function write_daycal_table($N_f) {
 		echo "\n<tr>";
 		echo "\n<td class=\"hour\">{$i}:00</td>";
 		for ($j=0; $j<3; $j++){ // цикл по водителям
-			echo "\n<td class=\"trip\""
-				. " date=\"" . ($cur_day['full_date']) . "\""
+		
+		// ищем поездку на данный по циклу день и в данное время и на данного водителя
+		// среди ближайших поездок
+			$find_flag = false; // если не находим
+			$hour = array();
+			foreach ($GLOBALS['G_Trips'] as $key=>$cur_trip) {
+				$clock_time = explode(" ", $cur_trip['time_start']);
+				$hour = explode(":", $clock_time[1]);
+				if ((stripos($cur_trip['time_start'], $cur_day['sql_date_start']) !== false )
+					&& (($j+1) == $cur_trip['driver_id']) 
+					&& ($hour[0] == $i)) // если находим
+						{$find_flag = true; break;}
+			}
+			
+			echo "\n<td class=\"trip";
+			echo "\"";
+			
+			// красим ячейку в цвет отдела:
+			if ($find_flag) echo " style=\"background: " . $GLOBALS['G_Trips'][$key]['Dept_color'] . ";\"";
+			
+			echo " date=\"" . ($cur_day['full_date']) . "\""
 				. " sql_date_start=\"" . ($cur_day['sql_date_start']) . "\""
 				. " driver_id=\"" . ($j+1) . "\""
 				. " time=\"{$i}:00\""
 				. " day_num=\"{$N_f}\""
 				. " onclick=\"show_popup(event);\">";
-			
+				
 			/* Добавляем информацию о поездках */
-			
-			// если сегодня и в это время и на этого водителя есть поездка
-			$flag = 0;
-			$hour = array();
-			
-			foreach ($GLOBALS['G_Trips'] as $key=>$cur_trip) {
-				$clock_time = explode(" ", $cur_trip['time_start']);
-				$hour = explode(":", $clock_time[1]);
-				if (
-					(stripos($cur_trip['time_start'], $cur_day['sql_date_start']) !== false )
-					&& (($j+1) == $cur_trip['driver_id']) 
-					&& ($hour[0] == $i)) {$flag = 1;break;}
-			}
-			
 			// выводим данные о поездке:
-			if ($flag == 1) echo "<div style=\"position: relative; width: 100%; height: 3px; background: #00ff00; \">&nbsp;</div>";
+			if ($find_flag) echo $GLOBALS['G_Trips'][$key]['end_point'];
 			
 			echo "</td>";
 		}
