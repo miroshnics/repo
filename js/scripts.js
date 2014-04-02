@@ -20,7 +20,22 @@ function toggle_open_close(id_spoiler_content) {
 	else obj.display = "none";
 }
 
-function show_popup(event) {
+function show_add_popup(event) {
+	/* Включаем popup */
+	document.getElementById('w_parent').style.display = 'block';
+	document.getElementById('okno').style.display = 'block';
+	document.getElementById("end_point").focus();
+
+	/* Загружаем в форму данные */
+	ptr_cell = event.target;
+	document.getElementById("time_start").value = ptr_cell.getAttribute("time");
+	document.getElementById("date_start").value = ptr_cell.getAttribute("date");
+	document.getElementById("sql_date_start").setAttribute("value", ptr_cell.getAttribute("sql_date_start"));
+	document.getElementById("dr"+ptr_cell.getAttribute("driver_id")).selected = 'true';
+	return false;
+}
+
+function show_edit_popup(event) {
 	/* Включаем popup */
 	document.getElementById('w_parent').style.display = 'block';
 	document.getElementById('okno').style.display = 'block';
@@ -84,4 +99,15 @@ function Cls(tag, FindClass){
 		if(allElem[i].className == FindClass) arrE.push(allElem[i]);
 	};
 	return arrE;
+}
+
+function get_content (filename) {
+	var xhttp;
+	/* Если объект XMLHttpRequest существует, значит мы имеем дело с современным браузером
+	Chrome, Firefox, Safari, Opera или IE7 и выше. */
+	if (window.XMLHttpRequest)
+		xhttp=new XMLHttpRequest();
+	/* Если же объект XMLHttpRequest не существует значит мы имеем дело с IE6 и нам придется 
+	воспользоваться специальным синтаксисом */
+	else xhttp=new ActiveXObject("Microsoft.XMLHTTP");
 }

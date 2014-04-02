@@ -6,7 +6,7 @@ You can add this to make a spoiler:
 
 <h3>Онлайн-Диспетчер: добавление поездки
 </h3>
-
+<div onclick="hide_popup(event, false);" class="close_icon">&nbsp;</div>
 <form id="add_Trip_form" action="<?=$_SERVER['PHP_SELF'] /* index.php */?>" method="post" >
 	<input type="hidden" name="action" value="add_Trip" />
 	<input type="hidden" name="sql_date_start" id="sql_date_start" value="" />

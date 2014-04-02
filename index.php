@@ -134,8 +134,12 @@ function write_daycal_table($N_f) {
 				. " sql_date_start=\"" . ($cur_day['sql_date_start']) . "\""
 				. " driver_id=\"" . ($j+1) . "\""
 				. " time=\"{$i}:00\""
-				. " day_num=\"{$N_f}\""
-				. " onclick=\"show_popup(event);\">";
+				. " day_num=\"{$N_f}\"";
+			if ($find_flag)
+				echo " onclick=\"show_edit_popup(" . $GLOBALS['G_Trips'][$key-1]['end_point'] . ");\"";
+			else
+				echo " onclick=\"show_add_popup(event);\"";
+			echo ">";
 				
 			/* Добавляем информацию о поездках */
 			// выводим данные о поездке:
