@@ -62,7 +62,7 @@ $str = "SELECT
 		((TO_DAYS(tbl_Trips.time_start) - TO_DAYS(NOW())) BETWEEN 0 AND 6)
 		AND (tbl_Trips.Driver_id = tbl_Drivers.id)
 		AND (tbl_Trips.client_dept_id = tbl_Depts.id)
-	ORDER BY tbl_Trips.time_start;";
+	ORDER BY tbl_Trips.time_start ASC, tbl_Trips.Driver_id ASC;";
 $sql_week_trips = mysql_query($str);
 if (!$sql_week_trips) echo 'Ошибка MySQL, не удалось получить список таблиц: ' . mysql_error();
 else {
@@ -92,38 +92,43 @@ for ($i=0; $i<7; $i++) {
 /* Формирование почасовых таблиц на день */
 function write_daycal_table($N_f) {
 	$cur_day = $GLOBALS['WeekDay'][$N_f];
-		
-		echo "\n<table class=\"day_content\" border=\"0\" frame=\"void\" rules=\"none\" cellpadding=\"0\" cellspacing=\"0\" >\n<tr>";
-		
-		echo "\n<td class=\"hours_content\" width=\"45px;\">";
-		echo "\n<table class=\"hours\" frame=\"border\" rules=\"all\" cellpadding=\"0\" cellspacing=\"0\" >";
-		for ($i=9; $i<18; $i++)
-			echo "\n<tr>\n<td class=\"hour\">{$i}:00</td></tr>";
-		echo "</table>\n</td>";
+	static $key = 0;
+	$cur_trip = 0;
+	
+	/* Таблица-контейнер */
+	echo "\n<table class=\"day_content\" border=\"0\" frame=\"void\" rules=\"none\" cellpadding=\"0\" cellspacing=\"0\" >\n<tr>";
+	
+	/* Формируем таблицу с часами 9:00-17:00 */
+	echo "\n<td class=\"hours_content\" width=\"45px;\">";
+	echo "\n<table class=\"hours\" frame=\"border\" rules=\"all\" cellpadding=\"0\" cellspacing=\"0\" >";
+	for ($i=9; $i<18; $i++)
+		echo "\n<tr>\n<td class=\"hour\">{$i}:00</td></tr>";
+	echo "</table>\n</td>";
 	
 	echo "\n<td>\n<table class=\"daycal\" id=\"day{$N_f}\" frame=\"border\" rules=\"all\" cellpadding=\"3px\" cellspacing=\"0\" >";
 	for ($i=9; $i<18; $i++) { // цикл по часам
 		echo "\n<tr>";
 		for ($j=0; $j<3; $j++){ // цикл по водителям
 		
-		// ищем поездку на данный по циклу день и в данное время и на данного водителя
-		// среди ближайших поездок
-			$find_flag = false; // если не находим
-			$hour = array();
-			foreach ($GLOBALS['G_Trips'] as $key=>$cur_trip) {
-				$clock_time = explode(" ", $cur_trip['time_start']);
-				$hour = explode(":", $clock_time[1]);
-				if ((stripos($cur_trip['time_start'], $cur_day['sql_date_start']) !== false )
-					&& (($j+1) == $cur_trip['driver_id']) 
-					&& ($hour[0] == $i)) // если находим
-						{$find_flag = true; break;}
+			$find_flag = false; // если не найдём
+			if ($key < count($GLOBALS['G_Trips'])){
+					$cur_trip = $GLOBALS['G_Trips'][$key];
+					// ищем поездку на данный день и в данное время и на данного водителя
+					// среди ближайших поездок
+					$hour = array();
+					$time = explode(" ", $cur_trip['time_start']);
+					$clock_time = explode(":", $time[1]);
+					if ((stripos($cur_trip['time_start'], $cur_day['sql_date_start']) !== false )
+						&& (($j+1) == $cur_trip['driver_id']) 
+						&& ($clock_time[0] == $i)) // если находим
+							{$find_flag = true; $key++;}
 			}
-			
+		
 			echo "\n<td class=\"trip";
 			echo "\"";
 			
 			// красим ячейку в цвет отдела:
-			if ($find_flag) echo " style=\"background: " . $GLOBALS['G_Trips'][$key]['Dept_color'] . ";\"";
+			if ($find_flag) echo " style=\"background: " . $GLOBALS['G_Trips'][$key-1]['Dept_color'] . ";\"";
 			
 			echo " date=\"" . ($cur_day['full_date']) . "\""
 				. " sql_date_start=\"" . ($cur_day['sql_date_start']) . "\""
@@ -134,7 +139,7 @@ function write_daycal_table($N_f) {
 				
 			/* Добавляем информацию о поездках */
 			// выводим данные о поездке:
-			if ($find_flag) echo $GLOBALS['G_Trips'][$key]['end_point'];
+			if ($find_flag) echo $GLOBALS['G_Trips'][$key-1]['end_point'] . ", в " . $clock_time[0] . ":" . $clock_time[1];
 			
 			echo "</td>";
 		}
@@ -165,8 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </head>
 
 <body onkeyup="hide_popup(event, true);" >
-
-
 
 <!-- **************************** HEADER **************************** -->
 <div id="header">
