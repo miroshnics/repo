@@ -8,10 +8,13 @@ for ($i=0; $i<7; $i++) {
 	$WeekDay[$i]['nixtime'] = mktime(0, 0, 0, date("m"), date("d")+($i-0), date("Y"));
 	$WeekDay[$i]['day'] = ucfirst(strftime("%A", $WeekDay[$i]['nixtime']));
 	$WeekDay[$i]['date'] = date("d.m", $WeekDay[$i]['nixtime']);
+	$WeekDay[$i]['sql_date'] = date("Y.m.d", $WeekDay[$i]['nixtime']);
 	if ($WeekDay[$i]['day'] == 'Суббота' || $WeekDay[$i]['day'] == 'Воскресенье')
 		$WeekDay[$i]['is_holiday'] = ' holiday';
 	else $WeekDay[$i]['is_holiday'] = '';
 }
+
+
 
 /* Формирование почасовых таблиц на день */
 function write_daycal_table($N_f) {
@@ -21,18 +24,21 @@ function write_daycal_table($N_f) {
 		echo "<td class=\"hour\">{$i}:00</td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
+					sql_date=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date']) . "\" 
 					driver_id=\"1\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
 					onclick=\"show_popup(event);\"></td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
+					sql_date=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date']) . "\" 
 					driver_id=\"2\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 
 					onclick=\"show_popup(event);\"></td>";
 		echo "<td class=\"trip\" 
 					date=\"" . date("d.m.Y", $GLOBALS['WeekDay'][$N_f]['nixtime']) . "\" 
+					sql_date=\"" . ($GLOBALS['WeekDay'][$N_f]['sql_date']) . "\" 
 					driver_id=\"3\" 
 					time=\"{$i}:00\" 
 					day_num=\"{$N_f}\" 

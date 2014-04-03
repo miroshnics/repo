@@ -38,7 +38,6 @@ td.mtbl_td_header{padding-left: 51px;}
 td.mtbl_td_header table.mtbl_header {position: relative; width: 100%; text-align: center; font-size: 16px;}
 td.mtbl_td_header table.mtbl_header td {width: 30%; padding: 0;}
 
-td.delim {border-bottom: 1px solid grey;}
 
 /* Всплывающее окно */
 div#w_parent {
@@ -72,3 +71,5 @@ div#okno {
 	padding: 15px;
 	max-height: 400px;
 }
+
+form#add_Trip_form {width:460px; margin: auto; position: relative;}

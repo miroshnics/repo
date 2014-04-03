@@ -7,12 +7,12 @@ You can add this to make a spoiler:
 <h3>Онлайн-Диспетчер: добавление поездки
 </h3>
 
-<div>
-	<form action="<?=$_SERVER['PHP_SELF'] /* index.php */?>" method="post" >
+<form id="add_Trip_form" action="<?=$_SERVER['PHP_SELF'] /* index.php */?>" method="post" >
 	<input type="hidden" name="action" value="add_Trip" />
+	<input type="hidden" name="sql_date" id="sql_date" value="" />
 	<table>
 	<tr><td><span>Пункт назначения:</span></td>
-	<td><input  autofocus tabindex="1" type="textarea" size="45" name="end_point" /></td></tr>
+	<td><input  autofocus autocomplete="on" tabindex="1" type="textarea" size="45" id="end_point" name="end_point" /></td></tr>
 	
 	<tr><td><span>Дата отправления:</span></td>
 	<td><input tabindex="2" type="textarea" size="45" id="date_start" name="date_start" placeholder="в формате ДД-ММ" /></td></tr>
@@ -20,8 +20,8 @@ You can add this to make a spoiler:
 	<tr><td><span>Время отправления:</span></td>
 	<td><input tabindex="3" type="textarea" size="45" id="time_start" name="time_start" placeholder="в формате ЧЧ:ММ" /></td></tr>
 	
-	<tr><td class="delim"><span>Водитель:</span></td>
-	<td class="delim"><select tabindex="4" size="1" id="Driver_id" name="Driver_id">
+	<tr><td><span>Водитель:</span></td>
+	<td><select tabindex="4" size="1" id="Driver_id" name="Driver_id">
 	<? mysql_data_seek($sql_drivers, 0);
 	$N = 1;
 	while ($row = mysql_fetch_assoc($sql_drivers)) {
@@ -30,10 +30,8 @@ You can add this to make a spoiler:
 		 . "</option>"; $N++;} ?>	
 	</select></td></tr>
 	<tr><td><span>Заказчик:</span></td>
-	<td><input tabindex="5" type="textarea" size="45" name="client" /></td></tr>
-	
-	
-	<!-- -----============================----- -->
+	<td><input autocomplete="on" tabindex="5" type="textarea" size="45" name="client" /></td></tr>
+
 	<? $sql_depts; ?>
 	<tr><td><span>Отдел:</span></td>
 	<td><select tabindex="6" size="1" id="client_dept_id" name="client_dept_id">
@@ -47,13 +45,15 @@ You can add this to make a spoiler:
 	</td>
 	<!-- -----============================----- -->
 	
+	<tr class="delim"><td colspan="2"><hr color="#eee" size="8px"/></td></tr>
 	
 	</tr>
 	<tr><td><span>Время прибытия:</span></td>
-	<td><input tabindex="7" type="textarea" size="45" name="time_end" /></td></tr>
+	<td><input tabindex="7" autocomplete="off" type="textarea" size="45" name="time_end" /></td></tr>
 	<tr><td><span>Длина маршрута:</span></td>
-	<td><input tabindex="8" type="textarea" size="45" name="dlina" /></td></tr>
+	<td><input tabindex="8" autocomplete="off" type="textarea" size="45" name="dlina" /></td></tr>
+	<tr><td><span>Пункт отправки:</span></td>
+	<td><input autocomplete="on" tabindex="8" type="textarea" size="45" value="Управление" name="start_point" /></td></tr>
 	<tr><td>&nbsp;</td><td><input tabindex="9" type="submit" value="Добавить поездку"></td></tr>
 	</table>
-	</form>
-</div>
+</form>

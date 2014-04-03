@@ -24,11 +24,13 @@ function show_popup(event) {
 	/* Включаем popup */
 	document.getElementById('w_parent').style.display = 'block';
 	document.getElementById('okno').style.display = 'block';
+	document.getElementById("end_point").focus();
 
 	/* Загружаем в форму данные */
 	ptr_cell = event.target;
 	document.getElementById("time_start").value = ptr_cell.getAttribute("time");
 	document.getElementById("date_start").value = ptr_cell.getAttribute("date");
+	document.getElementById("sql_date").setAttribute("value", ptr_cell.getAttribute("sql_date"));
 	document.getElementById("dr"+ptr_cell.getAttribute("driver_id")).selected = 'true';
 	return false;
 }
